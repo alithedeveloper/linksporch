@@ -221,10 +221,16 @@
                 </div>
             </header>
 
-            <!-- Page Content -->
-            <main>
-                <slot></slot>
-            </main>
+            <off-canvas-mobile-menu />
+            <div class="flex min-h-screen flex">
+                <SideBarNav />
+                <!-- Page Content -->
+                <main class="flex-1">
+
+                    <slot></slot>
+                </main>
+            </div>
+
         </div>
     </div>
 </template>
@@ -236,6 +242,8 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import OffCanvasMobileMenu from "@/Partials/OffCanvasMobileMenu"
+    import SideBarNav from "@/Partials/SideBarNav"
 
     export default {
         components: {
@@ -245,6 +253,8 @@
             JetDropdownLink,
             JetNavLink,
             JetResponsiveNavLink,
+            OffCanvasMobileMenu,
+            SideBarNav,
         },
 
         data() {

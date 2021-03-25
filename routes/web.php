@@ -1,6 +1,13 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\{
+    BiosController,
+    BioStatusController,
+    DashboardController,
+    LinkStatusController,
+    LinkTitleUrlController,
+};
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,4 +34,21 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
+
+    // Show Bio
+    Route::get('/bios/{bio:slug}', [BiosController::class,'show'])
+        ->name('bio.show');
+    // Bio Status
+    Route::put('/bio/{bio:slug}/status', BioStatusController::class)
+        ->name('bio.status.update');
+
+    //Link Status
+    Route::put('/links/{link}/status', LinkStatusController::class)
+        ->name('link.status.update');
+
+    //Link Title & Url
+    Route::put('/links/{link}/title-url', LinkTitleUrlController::class)
+        ->name('link.title.url.update')->middleware('remember');
+
+
 });

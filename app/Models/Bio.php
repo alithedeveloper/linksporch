@@ -11,6 +11,19 @@ class Bio extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'url',
+        'is_public',
+        'leap_url',
+        'is_verified',
+        'is_active',
+        'text_color',
+        'background'
+    ];
+
     protected $casts = [
         'is_active' => 'boolean'
     ];

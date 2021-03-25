@@ -1,10 +1,5 @@
 <template>
     <app-layout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
 
         <div class="h-screen flex overflow-hidden bg-gray-100">
 
@@ -90,7 +85,7 @@ export default {
         AppLayout,
         UserWelcomeBanner,
         DashboardStats,
-        BioItem
+        BioItem,
     },
     props: {
         bios: Object

@@ -7307,6 +7307,11 @@ vue-loader@^16.1.2:
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
 
+vue3-click-away@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vue3-click-away/-/vue3-click-away-1.1.0.tgz#4970159bc4c5b80f0aac6f0d0cc9333c150624d6"
+  integrity sha512-I1d/vX9vCW1on8MA7VeufV73iPL1WPaohzEJAA7SFsMDdUEEt59zW7xV3vEgS+VrwVAzcd3c1oX203RcCWS3Cw==
+
 vue@^3.0.5:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.0.7.tgz#8bcff51f8be570f9e4ce8cc5f52e2ab0fe3c74a1"

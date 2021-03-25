@@ -18,7 +18,10 @@ mix.js('resources/js/app.js', 'public/js').vue()
         require('autoprefixer'),
     ])
     .webpackConfig(require('./webpack.config'))
-    .browserSync();
+    .browserSync({
+        proxy: 'localhost',
+        open: false
+    });
 
 if (mix.inProduction()) {
     mix.version();
