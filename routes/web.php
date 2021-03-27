@@ -1,13 +1,12 @@
 <?php
 
-use App\Http\Controllers\{
-    BiosController,
+use App\Http\Controllers\{BiosController,
     BioStatusController,
+    BioViewController,
     DashboardController,
     LinkStatusController,
-    LinkTitleUrlController,
+    LinkTitleUrlController
 };
-
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,19 +24,23 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        'canLogin'       => Route::has('login'),
+        'canRegister'    => Route::has('register'),
         'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'phpVersion'     => PHP_VERSION,
     ]);
 });
+
+Route::get('/{user:username}/{bio:slug}', BioViewController::class)
+    ->name('bio.view');
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 
     // Show Bio
-    Route::get('/bios/{bio:slug}', [BiosController::class,'show'])
+    Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
         ->name('bio.show');
+
     // Bio Status
     Route::put('/bio/{bio:slug}/status', BioStatusController::class)
         ->name('bio.status.update');

@@ -1,124 +1,109 @@
 <template>
-    <li class="bg-white rounded-lg shadow-md" style="min-height: 120px">
-        <div class="flex items-center" style="min-height: 120px;">
+    <div class="mb-10">
+        <div class="bg-white shadow-md rounded-t-lg"
+             :class="!slideDown ? 'rounded-b-lg':''"
+             style="min-height: 120px">
+            <div class="flex items-center" style="min-height: 120px">
+                <!-- Link Handle -->
+                <div
+                    class="flex items-center flex-shrink-0 cursor-move w-7"
+                    style="min-height: 120px"
+                >
+                    <handle-icon
+                        class="block w-6 h-6 mx-auto text-gray-600 fill-current"
+                    />
+                </div>
 
-            <!-- Link Handle -->
-            <div class="flex-shrink-0 cursor-move w-7 flex items-center" style="min-height: 120px;">
-                <handle-icon class="w-6 h-6 block fill-current text-gray-600 block mx-auto"/>
-            </div>
-
-            <!-- Link Details -->
-            <div class="px-2 flex-1 border-l-2 border-gray-200 w-full mr-2 md:mr-4" style="min-height: 120px;">
-
-                <!-- Title -->
-                <div class="mt-5 w-full">
-                    <div class="flex items-center" v-if="isEditingTitle">
-                        <div class="relative flex-1 mr-2">
-                            <div class="flex items-center mb-2">
-                                <label :for="`title-${link.id}`" class="sr-only">Title</label>
-                                <input type="text"
-                                       v-model="form.title"
-                                       name="title"
-                                       @keydown.enter="persistEdit('title')"
-                                       :id="`title-${link.id}`"
-                                       class="flex-1 space-x-2 block text-sm border-1 border-gray-300 rounded py-1 px-2 leading-none
-                                             appearance-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200" placeholder="Title">
-                                <span
-                                    @click="persistEdit('title')"
-                                    class="block ml-2 cursor-pointer"><check-icon classes="w-6 h-6 text-gray-500"></check-icon> </span>
-                                <span
-                                    @click="handleCancelEdit('title')"
-                                    class="block ml-2 cursor-pointer"><cancel-icon classes="w-6 h-6 text-gray-500"></cancel-icon> </span>
-                            </div>
-
-                            <p class="absolute right-0 text-xs leading-none text-red-600 -bottom-4"
-                               id="title-id-1" v-if="errors.title">
-                                {{ errors.title }}
-                            </p>
+                <!-- Link Details -->
+                <div
+                    class="flex-1 w-full px-2 mr-2 border-l-2 border-gray-200 md:mr-4"
+                    style="min-height: 120px"
+                >
+                    <!-- Title -->
+                    <div class="w-full mt-5">
+                        <div class="flex items-center" v-if="isEditingTitle">
+                            <link-title
+                                v-model:title="form.title"
+                                v-model:is-editing-title="isEditingTitle"
+                                :error="error.title"
+                                :data="link"
+                                :persist="persistEdit"
+                            />
+                        </div>
+                        <div class="flex items-center p-1" v-else>
+                            <p class="font-medium">{{ link.title }}</p>
+                            <span class="block pl-2 cursor-pointer" @click="handleEditTitle">
+                                <edit-icon class="w-3 h-3 fill-current"/>
+                            </span>
                         </div>
                     </div>
-                    <div class="flex items-center p-1" v-else>
-                        <p class="font-medium">{{ link.title }}</p>
-                        <span class="pl-2 block cursor-pointer" @click="handleEditTitle">
-                          <edit-icon class="fill-current w-3 h-3"/>
-                        </span>
+                    <!--/Title-->
+
+                    <!--/ URL -->
+                    <div class="w-full">
+                        <!--/ editing -->
+                        <div class="flex items-center" v-if="isEditingUrl">
+                            <link-url
+                                v-model:url="form.url"
+                                v-model:is-editing-url="isEditingUrl"
+                                :error="error.url"
+                                :data="link"
+                                :persist="persistEdit"
+                            />
+                        </div>
+                        <!--/ else -->
+                        <div class="flex items-center p-1" v-else>
+                            <p class="text-sm font-light">{{ link.url }}</p>
+                            <span
+                                class="pl-2 block cursor-pointer pb-0.5"
+                                @click="handleEditUrl"
+                            >
+                <edit-icon class="w-3 h-3 fill-current"/>
+              </span>
+                        </div>
                     </div>
+                    <!--/ URL -->
 
-
-                </div>
-                <!--/Title-->
-
-                <!--/ URL -->
-                <div class="w-full">
-                    <!--/ editing -->
-                    <div class="flex items-center" v-if="isEditingUrl">
-                        <div class="relative flex-1 mr-2">
-                            <div class="flex items-center">
-                                <label :for="`url-${link.id}`" class="sr-only">Url</label>
-                                <input type="text"
-                                       name="url"
-                                       v-model="form.url"
-                                       :id="`url-${link.id}`"
-                                       @keydown.enter="persistEdit('url')"
-                                       class="w-full block text-sm border-1 border-gray-300 rounded py-1 px-2 leading-none
-                                           appearance-none focus:ring-1 focus:ring-offset-1 focus:ring-indigo-200 my-2"
-                                       placeholder="Url">
-                                <span
-                                    @click="persistEdit('url')"
-                                    class="block ml-2 cursor-pointer tab-index"><check-icon classes="w-6 h-6 text-gray-500"></check-icon> </span>
-                                <span
-                                    @click="handleCancelEdit('url')"
-                                    class="block ml-2 cursor-pointer"><cancel-icon classes="w-6 h-6 text-gray-500"></cancel-icon> </span>
-                            </div>
-
-
-                            <p class="absolute right-0 text-xs leading-none text-red-600 -bottom-4"
-                               id="url-id" v-if="errors.url">
-                               {{ errors.url }}
-                            </p>
+                    <div class="flex items-center w-full cursor-pointer">
+                        <div class="py-2 pr-2" @click="handleSlideDown('leap_link')">
+                            <forward-icon class="w-6 h-6 text-gray-500 fill-current"/>
+                        </div>
+                        <div class="px-3 py-2" @click="handleSlideDown('icon_link')">
+                            <upload-icon class="w-6 h-6 text-gray-500 fill-current"/>
+                        </div>
+                        <div class="px-3 py-2" @click="handleSlideDown('schedule_link')">
+                            <schedule-icon class="w-6 h-6 text-gray-500 fill-current"/>
                         </div>
 
-
-                    </div>
-                    <!--/ else -->
-                    <div class="flex items-center p-1" v-else>
-                        <p class="font-light text-sm">{{ link.url }}</p>
-                        <span class="pl-2 block cursor-pointer pb-0.5" @click="handleEditUrl">
-                           <edit-icon class="fill-current w-3 h-3"/>
-                        </span>
-                    </div>
-
-                </div>
-                <!--/ URL -->
-
-                <div class="w-full cursor-pointer flex items-center">
-                    <div class="pr-2 py-2">
-                        <forward-icon class="w-6 h-6 fill-current text-gray-500"/>
-                    </div>
-                    <div class="px-3 py-2">
-                        <upload-icon class="w-6 h-6 fill-current text-gray-500"/>
-                    </div>
-                    <div class="px-3 py-2">
-                        <schedule-icon class="w-6 h-6 fill-current text-gray-500"/>
-                    </div>
-
-                    <div class="px-3 py-2">
-                        <stats-icon class="w-5 h-5 fill-current text-gray-500 mb-1"/>
+                        <div class="px-3 py-2">
+                            <stats-icon class="w-5 h-5 mb-1 text-gray-500 fill-current"/>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-
-
-            <div class="flex-shrink-0 flex flex-col justify-between items-center py-5 relative"
-                 style="min-height: 120px;">
-                <toggle-input :status="form.is_active" @update:status="handleToggle" class="mr-4"/>
-                <div class="p-5 absolute bottom-0 right-0 cursor-pointer -bottom-0.5">
-                    <trash-icon class="fill-current text-gray-800 w-5 h-5"/>
+                <div
+                    class="relative flex flex-col items-center justify-between flex-shrink-0 py-5"
+                    style="min-height: 120px"
+                >
+                    <toggle-input
+                        :status="form.is_active"
+                        @update:status="handleToggle"
+                        class="mr-4"
+                    />
+                    <div class="p-5 absolute right-0 cursor-pointer -bottom-0.5">
+                        <trash-icon class="w-5 h-5 text-gray-800 fill-current"/>
+                    </div>
                 </div>
             </div>
         </div>
-    </li>
+
+        <link-slide-down
+            v-show="slideDown"
+            :content="displayContent"
+            v-model="slideDown"
+        />
+
+    </div>
 </template>
 
 <script>
@@ -130,25 +115,22 @@ import StatsIcon from "@/Components/Icons/StatsIcon";
 import ForwardIcon from "@/Components/Icons/ForwardIcon";
 import TrashIcon from "@/Components/Icons/TrashIcon";
 import ToggleInput from "@/Components/Input/ToggleInput";
-import CheckIcon from "./Icons/CheckIcon";
-import CancelIcon from "./Icons/CancelIcon";
-
+import TextInput from "@/Components/Input/TextInput";
+import CheckIcon from "@/Components/Icons/CheckIcon";
+import CancelIcon from "@/Components/Icons/CancelIcon";
+import LinkTitle from "@/Components/Link/LinkTitle";
+import LinkUrl from "@/Components/Link/LinkUrl";
+import LinkSlideDown from "@/Components/Link/LinkSlideDown";
 
 export default {
     name: "LinkItem",
     props: {
         link: {
             type: Object,
-            default: {}
+            default: {},
         },
-        errors: {
-            type: Object,
-            default: {}
-        }
     },
     components: {
-        CancelIcon,
-        CheckIcon,
         TrashIcon,
         HandleIcon,
         UploadIcon,
@@ -156,60 +138,102 @@ export default {
         StatsIcon,
         ForwardIcon,
         ScheduleIcon,
-        ToggleInput
+        ToggleInput,
+        TextInput,
+        CheckIcon,
+        CancelIcon,
+        LinkTitle,
+        LinkUrl,
+        LinkSlideDown,
     },
     data() {
         return {
             isEditingTitle: false,
             isEditingUrl: false,
+            error: {},
+            slideDown: false,
             form: {
                 is_active: this.link.is_active,
                 title: this.link.title,
                 url: this.link.url,
-            }
-        }
+            },
+            displayContent: {},
+            content: [
+                {
+                    name: 'leap_link',
+                    title: 'Leap Link',
+                    description: `With Linktree PRO you can opt to temporarily forward all visitors directly
+                                  to a destination, bypassing your Linktree altogether.`,
+                    buttonText: 'Find out more'
+                },
+                {
+                    name: 'icon_link',
+                    title: 'choose an icon',
+                    description: `Choose an icon to appear on the link. It usually helps in making your link
+                                  button to stand out and easily recognizable`,
+                    buttonText: 'Choose an icon'
+                },
+                {
+                    name: 'schedule_link',
+                    title: 'Schedule your link',
+                    description: `With linkporch Pro account you can choose when your links go live`,
+                    buttonText: 'Find Out More'
+                }
+            ]
+        };
     },
     methods: {
         handleToggle(newValue) {
-            this.form.is_active = !this.form.is_active
-            this.$inertia.put(this.route('link.status.update', this.link.id), this.form.is_active, {
-                preserveScroll: true,
-                onStart: () => this.processing = true,
-                onSuccess: () => this.processing = false
-            })
+            this.form.is_active = !this.form.is_active;
+            this.$inertia.put(
+                this.route("link.status.update", this.link.id),
+                this.form.is_active,
+                {
+                    preserveScroll: true,
+                    onStart: () => (this.processing = true),
+                    onSuccess: () => (this.processing = false),
+                }
+            );
         },
         handleEditUrl() {
-            this.isEditingUrl = !this.isEditingUrl
-            if (this.isEditingTitle) this.isEditingTitle = false
+            this.isEditingUrl = !this.isEditingUrl;
+            if (this.isEditingTitle) this.isEditingTitle = false;
         },
         handleEditTitle() {
-            this.isEditingTitle = !this.isEditingTitle
-            if (this.isEditingUrl) this.isEditingUrl = false
+            this.isEditingTitle = !this.isEditingTitle;
+            if (this.isEditingUrl) this.isEditingUrl = false;
         },
         handleCancelEdit(input) {
-            if(input === 'title') this.isEditingTitle = false
-            if(input === 'url') this.isEditingUrl = false
+            if (input === "title") this.isEditingTitle = false;
+            if (input === "url") this.isEditingUrl = false;
         },
-        persistEdit(input){
-            this.$inertia.put(this.route('link.title.url.update', this.link.id), this.form, {
-                preserveScroll: true,
-                onStart: () => this.processing = true,
-                onFinish: () => this.processing = false,
-                onError:(erros)=> {
-                  console.log(erros)
-                },
-                onSuccess: () => {
-                    if (input === 'title'){
-                        this.isEditingTitle = false
-                    }else{
-                        this.isEditingUrl = false
-                    }
+        persistEdit(input) {
+            this.$inertia.put(
+                this.route("link.title.url.update", this.link.id),
+                this.form,
+                {
+                    preserveScroll: true,
+                    onStart: () => (this.processing = true),
+                    onFinish: () => (this.processing = false),
+                    onError: (error) => {
+                        this.error = Object.assign({}, this.error, error);
+                    },
+                    onSuccess: () => {
+                        this.error = {};
+                        if (input === "title") {
+                            this.isEditingTitle = false;
+                        } else {
+                            this.isEditingUrl = false;
+                        }
+                    },
                 }
-            })
-
+            );
+        },
+        handleSlideDown(link) {
+            this.slideDown = true
+            const leapUrlContent = this.content.find((contentItem) => contentItem.name === link)
+            this.displayContent = Object.assign({}, this.displayContent, leapUrlContent)
         }
-
-
-    }
-}
+    },
+};
 </script>

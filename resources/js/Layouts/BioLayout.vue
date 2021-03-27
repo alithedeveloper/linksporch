@@ -17,6 +17,13 @@
                     <a href="#" class="py-4 block underline">https://www.links-porch.com/@ali.shah/project</a>
                     <share-button/>
                 </div>
+
+                <div class="smartphone">
+                    <div class="content">
+                        <iframe :src="`/${username}/${bioSlug}`" style="width:100%;border:none;height:100%" />
+                    </div>
+                </div>
+
             </aside>
         </div>
     </div>
@@ -29,10 +36,37 @@ export default {
     name: "BioLayout",
     components: {
         ShareButton
+    },
+    computed:{
+       username(){
+           return this.$page.props.user.username
+       },
+        bioSlug(){
+           return this.$page.props.bio.slug
+        }
     }
 }
 </script>
 
 <style scoped>
+.smartphone {
+    position: relative;
+    width: 360px;
+    height: 640px;
+    margin: 20px auto 0;
+    border: 12px black solid;
+    border-radius: 36px;
+    overflow: hidden;
+}
 
+
+
+
+
+/* The screen (or content) of the device */
+.smartphone .content {
+    width: 100%;
+    height: 100%;
+    background: white;
+}
 </style>

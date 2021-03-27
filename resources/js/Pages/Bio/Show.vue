@@ -5,15 +5,15 @@
                 <div class="flex lg:px-32">
                     <button
                         type="button"
-                        class="block w-full px-5 py-3 border border-transparent text-lg font-semibold tracking-wide rounded-lg shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-center">
+                        class="block w-full px-5 py-3 text-lg font-semibold tracking-wide text-center text-white bg-indigo-600 border border-transparent rounded-lg shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Add new link
                     </button>
 
                 </div>
                 <div class="mt-5">
-                    <ul class="lg:px-32 space-y-5" id="bio-links">
-                        <link-item v-for="link in bio.links" :link="link" :key="link.id" :errors="errors"/>
-                    </ul>
+                    <div class="lg:px-32" id="bio-links">
+                        <link-item v-for="link in bio.links" :link="link" :key="link.id" />
+                    </div>
                 </div>
             </div>
         </bio-layout>

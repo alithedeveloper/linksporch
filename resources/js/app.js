@@ -4,11 +4,12 @@ require('./bootstrap');
 import { createApp, h } from 'vue';
 import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
-import VueClickAway from "vue3-click-away";
+import mitt from 'mitt';
 
+const emitter = mitt();
 const el = document.getElementById('app');
 
-createApp({
+const app = createApp({
     render: () =>
         h(InertiaApp, {
             initialPage: JSON.parse(el.dataset.page),
@@ -17,6 +18,9 @@ createApp({
 })
     .mixin({ methods: { route } })
     .use(InertiaPlugin)
-    .mount(el);
+
+app.config.globalProperties.$emitter = emitter
+app.mount(el);
+
 
 InertiaProgress.init({ color: '#4B5563' });
