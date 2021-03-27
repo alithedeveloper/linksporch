@@ -31,7 +31,7 @@
                             />
                         </div>
                         <div class="flex items-center p-1" v-else>
-                            <p class="font-medium">{{ link.title }}</p>
+                            <p class="font-medium">{{ link.title.length === 0 ? 'Title' : link.title }}</p>
                             <span class="block pl-2 cursor-pointer" @click="handleEditTitle">
                                 <edit-icon class="w-3 h-3 fill-current"/>
                             </span>
@@ -40,7 +40,7 @@
                     <!--/Title-->
 
                     <!--/ URL -->
-                    <div class="w-full">
+                    <div class="w-full mt-1">
                         <!--/ editing -->
                         <div class="flex items-center" v-if="isEditingUrl">
                             <link-url
@@ -53,18 +53,18 @@
                         </div>
                         <!--/ else -->
                         <div class="flex items-center p-1" v-else>
-                            <p class="text-sm font-light">{{ link.url }}</p>
+                            <p class="text-sm font-light">{{ link.url.length === 0 ? 'Url' : link.url }}</p>
                             <span
                                 class="pl-2 block cursor-pointer pb-0.5"
                                 @click="handleEditUrl"
                             >
-                <edit-icon class="w-3 h-3 fill-current"/>
-              </span>
+                                <edit-icon class="w-3 h-3 fill-current"/>
+                            </span>
                         </div>
                     </div>
                     <!--/ URL -->
 
-                    <div class="flex items-center w-full cursor-pointer">
+                    <div class="flex items-center w-full cursor-pointer mt-5">
                         <div class="py-2 pr-2" @click="handleSlideDown('leap_link')">
                             <forward-icon class="w-6 h-6 text-gray-500 fill-current"/>
                         </div>
@@ -91,7 +91,9 @@
                         class="mr-4"
                     />
                     <div class="p-5 absolute right-0 cursor-pointer -bottom-0.5">
-                        <trash-icon class="w-5 h-5 text-gray-800 fill-current"/>
+                        <span @click="onClickDeleteLink">
+                           <trash-icon class="w-5 h-5 text-gray-800 fill-current"/>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -152,6 +154,7 @@ export default {
             isEditingUrl: false,
             error: {},
             slideDown: false,
+            processing: false,
             form: {
                 is_active: this.link.is_active,
                 title: this.link.title,
@@ -183,11 +186,19 @@ export default {
         };
     },
     methods: {
-        handleToggle(newValue) {
-            this.form.is_active = !this.form.is_active;
+        handleToggle(newToggleStatus) {
+            if (
+                this.link.title.length === 0 &&
+                this.link.url.length === 0
+            ) {
+                //TODO:: Provide user a visual feedback
+                return false;
+            }
+
+            this.form.is_active = newToggleStatus;
             this.$inertia.put(
                 this.route("link.status.update", this.link.id),
-                this.form.is_active,
+                {is_active: this.form.is_active},
                 {
                     preserveScroll: true,
                     onStart: () => (this.processing = true),
@@ -195,22 +206,27 @@ export default {
                 }
             );
         },
-        handleEditUrl() {
-            this.isEditingUrl = !this.isEditingUrl;
-            if (this.isEditingTitle) this.isEditingTitle = false;
-        },
         handleEditTitle() {
             this.isEditingTitle = !this.isEditingTitle;
             if (this.isEditingUrl) this.isEditingUrl = false;
+        },
+        handleEditUrl() {
+            this.isEditingUrl = !this.isEditingUrl;
+            if (this.isEditingTitle) this.isEditingTitle = false;
         },
         handleCancelEdit(input) {
             if (input === "title") this.isEditingTitle = false;
             if (input === "url") this.isEditingUrl = false;
         },
         persistEdit(input) {
+            const formKey = Object.keys(this.form).filter(key => key === input)
+            const formValue = this.form[formKey]
+            // we will create an object with dynamic key as
+            // it can be a title or url
+            const form = { [input] : formValue }
             this.$inertia.put(
                 this.route("link.title.url.update", this.link.id),
-                this.form,
+                form,
                 {
                     preserveScroll: true,
                     onStart: () => (this.processing = true),
@@ -233,6 +249,15 @@ export default {
             this.slideDown = true
             const leapUrlContent = this.content.find((contentItem) => contentItem.name === link)
             this.displayContent = Object.assign({}, this.displayContent, leapUrlContent)
+        },
+        onClickDeleteLink(){
+            this.$inertia.delete(
+                this.route("link.delete", this.link.id),
+                {
+                    onStart: () => (this.processing = true),
+                    onSuccess: () => (this.processing = false),
+                }
+            );
         }
     },
 };

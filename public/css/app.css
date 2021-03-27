@@ -776,8 +776,6 @@ video {
 	bottom: 0px;
 }.bottom-0 {
 	bottom: 0px;
-}.bottom-2 {
-	bottom: 0.5rem;
 }.z-0 {
 	z-index: 0;
 }.z-50 {
@@ -797,9 +795,6 @@ video {
 }.mx-5 {
 	margin-left: 1.25rem;
 	margin-right: 1.25rem;
-}.mx-3 {
-	margin-left: 0.75rem;
-	margin-right: 0.75rem;
 }.ml-3 {
 	margin-left: 0.75rem;
 }.-ml-px {
@@ -872,8 +867,8 @@ video {
 	margin-top: 3.5rem;
 }.mb-60 {
 	margin-bottom: 15rem;
-}.mb-2 {
-	margin-bottom: 0.5rem;
+}.-ml-1 {
+	margin-left: -0.25rem;
 }.mb-5 {
 	margin-bottom: 1.25rem;
 }.flex {
@@ -886,8 +881,6 @@ video {
 	display: grid;
 }.inline-block {
 	display: inline-block;
-}.table {
-	display: table;
 }.hidden {
 	display: none;
 }.h-5 {
@@ -1011,6 +1004,19 @@ video {
 }.scale-100 {
 	--tw-scale-x: 1;
 	--tw-scale-y: 1;
+}@-webkit-keyframes spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}@keyframes spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}.animate-spin {
+	-webkit-animation: spin 1s linear infinite;
+	        animation: spin 1s linear infinite;
 }.cursor-default {
 	cursor: default;
 }.cursor-pointer {
@@ -1087,10 +1093,6 @@ video {
 	--tw-space-y-reverse: 0;
 	margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
 	margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}.space-y-2 > :not([hidden]) ~ :not([hidden]) {
-	--tw-space-y-reverse: 0;
-	margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-	margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }.divide-y > :not([hidden]) ~ :not([hidden]) {
 	--tw-divide-y-reverse: 0;
 	border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -1180,9 +1182,6 @@ video {
 }.border-red-300 {
 	--tw-border-opacity: 1;
 	border-color: rgba(252, 165, 165, var(--tw-border-opacity));
-}.border-green-50 {
-	--tw-border-opacity: 1;
-	border-color: rgba(236, 253, 245, var(--tw-border-opacity));
 }.border-green-100 {
 	--tw-border-opacity: 1;
 	border-color: rgba(209, 250, 229, var(--tw-border-opacity));
@@ -1237,15 +1236,12 @@ video {
 }.bg-gray-900 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(17, 24, 39, var(--tw-bg-opacity));
-}.bg-blue-400 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(96, 165, 250, var(--tw-bg-opacity));
-}.bg-green-500 {
-	--tw-bg-opacity: 1;
-	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }.bg-green-200 {
 	--tw-bg-opacity: 1;
 	background-color: rgba(167, 243, 208, var(--tw-bg-opacity));
+}.bg-green-500 {
+	--tw-bg-opacity: 1;
+	background-color: rgba(16, 185, 129, var(--tw-bg-opacity));
 }.bg-opacity-25 {
 	--tw-bg-opacity: 0.25;
 }.fill-current {
@@ -1310,9 +1306,6 @@ video {
 }.px-5 {
 	padding-left: 1.25rem;
 	padding-right: 1.25rem;
-}.py-40 {
-	padding-top: 10rem;
-	padding-bottom: 10rem;
 }.pt-6 {
 	padding-top: 1.5rem;
 }.pt-5 {
@@ -1349,6 +1342,8 @@ video {
 	padding-right: 0.5rem;
 }.pb-8 {
 	padding-bottom: 2rem;
+}.pt-16 {
+	padding-top: 4rem;
 }.text-center {
 	text-align: center;
 }.text-right {
@@ -1407,8 +1402,6 @@ video {
 	letter-spacing: 0.1em;
 }.tracking-wider {
 	letter-spacing: 0.05em;
-}.tracking-wide {
-	letter-spacing: 0.025em;
 }.text-gray-500 {
 	--tw-text-opacity: 1;
 	color: rgba(107, 114, 128, var(--tw-text-opacity));
@@ -1466,6 +1459,9 @@ video {
 }.text-indigo-100 {
 	--tw-text-opacity: 1;
 	color: rgba(224, 231, 255, var(--tw-text-opacity));
+}.text-green-50 {
+	--tw-text-opacity: 1;
+	color: rgba(236, 253, 245, var(--tw-text-opacity));
 }.underline {
 	text-decoration: underline;
 }.antialiased {
@@ -1577,6 +1573,9 @@ video {
 }.hover\:bg-indigo-700:hover {
 	--tw-bg-opacity: 1;
 	background-color: rgba(67, 56, 202, var(--tw-bg-opacity));
+}.hover\:bg-indigo-500:hover {
+	--tw-bg-opacity: 1;
+	background-color: rgba(99, 102, 241, var(--tw-bg-opacity));
 }.hover\:text-gray-500:hover {
 	--tw-text-opacity: 1;
 	color: rgba(107, 114, 128, var(--tw-text-opacity));
@@ -1693,6 +1692,9 @@ video {
 }.active\:bg-gray-50:active {
 	--tw-bg-opacity: 1;
 	background-color: rgba(249, 250, 251, var(--tw-bg-opacity));
+}.active\:bg-indigo-700:active {
+	--tw-bg-opacity: 1;
+	background-color: rgba(67, 56, 202, var(--tw-bg-opacity));
 }.active\:text-gray-700:active {
 	--tw-text-opacity: 1;
 	color: rgba(55, 65, 81, var(--tw-text-opacity));

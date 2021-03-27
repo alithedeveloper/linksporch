@@ -14,7 +14,7 @@
             <aside class="hidden relative xl:flex xl:flex-col flex-shrink-0 w-5/12 border-l border-gray-200">
                 <!-- Start secondary column (hidden on smaller screens) -->
                 <div class="bg-white px-6 flex items-center justify-between border-b-2 border-white">
-                    <a href="#" class="py-4 block underline">https://www.links-porch.com/@ali.shah/project</a>
+                    <a href="#" class="py-4 block underline">{{ shareLink }}</a>
                     <share-button/>
                 </div>
 
@@ -43,6 +43,9 @@ export default {
        },
         bioSlug(){
            return this.$page.props.bio.slug
+        },
+        shareLink(){
+           return this.$page.props.bio.url
         }
     }
 }
@@ -57,6 +60,7 @@ export default {
     border: 12px black solid;
     border-radius: 36px;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 

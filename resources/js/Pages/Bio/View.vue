@@ -3,15 +3,29 @@
         class="min-h-screen"
         :class="bio.background"
     >
-        <div class="flex flex-col max-w-xs mx-auto py-40">
-            <a v-for="(link,index) in bio.links" :key="index"
-               :href="link.url"
-                class="border-2 border-green-100 p-2 mb-5 rounded mx-5
+        <div class="grid grid-col-6">
+            <div class="flex flex-col items-center pt-16">
+            <span class="inline-block h20 w-20 rounded-full overflow-hidden bg-gray-100">
+              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </span>
+                <p class="p-5 px-4 text-center text-green-50 text-sm">
+                    {{ bio.description }}
+                </p>
+            </div>
+            <div class="flex flex-col">
+                <a v-for="(link,index) in bio.links" :key="index"
+                   :href="link.url"
+                   v-show="link.title"
+                   class="border-2 border-green-100 p-2 mb-5 rounded mx-5
                        text-center shadow-sm bg-green-200"
-            >{{ link.title }}</a>
+                >{{ link.title }}</a>
 
 
+            </div>
         </div>
+
     </div>
 
 </template>
