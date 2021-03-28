@@ -7,7 +7,8 @@ use App\Http\Controllers\{BiosController,
     LinkController,
     LinksController,
     LinkStatusController,
-    LinkTitleUrlController};
+    LinkTitleUrlController
+};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,7 +39,6 @@ Route::get('/{user:username}/{bio:slug}', BioViewController::class)
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
 
-
     // Show Bio
     Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
         ->name('bio.show');
@@ -51,14 +51,14 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
     Route::post('/bio/{bio:slug}/links', [LinkController::class, 'store'])
         ->name('link.create');
 
+
     //Link Status
-    Route::delete('/links/{link}', [LinksController::class,'delete'])
+    Route::delete('/links/{link}', [LinksController::class, 'delete'])
         ->name('link.delete');
 
     //Link Status
     Route::put('/links/{link}/status', LinkStatusController::class)
         ->name('link.status.update');
-
 
 
     //Link Title & Url

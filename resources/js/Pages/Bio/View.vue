@@ -35,7 +35,12 @@
 export default {
     name: "View",
     components: {},
-    props: ['user', 'bio']
+    props: ['user', 'bio'],
+    created() {
+        this.$emitter.on('new-link-added', () => {
+            location.reload()
+        })
+    }
 }
 </script>
 

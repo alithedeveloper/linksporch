@@ -10,7 +10,6 @@ class LinkController extends Controller
 {
     public function store(Bio $bio)
     {
-        sleep(2);
         $bio->links()->create([
            'link_type_id' => 1,
             'title' => '',

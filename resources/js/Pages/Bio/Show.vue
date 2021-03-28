@@ -55,7 +55,8 @@ export default {
         errors: {
             type: Object,
             default: {}
-        }
+        },
+
     },
     data(){
         return{
@@ -67,10 +68,13 @@ export default {
             this.$inertia.post(this.route('link.create', this.bio.slug), {},{
                 preserveScroll: true,
                 onStart: () => this.processing = true,
-                onSuccess: () => this.processing = false
+                onSuccess: () => {
+                    this.processing = false
+                    this.$emitter.emit('reload')
+                }
             })
         }
-    },
+    }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <div>
         <jet-banner />
-
+        <notification/>
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
@@ -244,9 +244,11 @@
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
     import OffCanvasMobileMenu from "@/Partials/OffCanvasMobileMenu"
     import SideBarNav from "@/Partials/SideBarNav"
+    import Notification from "../Components/Notification";
 
     export default {
         components: {
+            Notification,
             JetApplicationMark,
             JetBanner,
             JetDropdown,

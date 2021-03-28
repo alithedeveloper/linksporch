@@ -105,6 +105,7 @@
             v-model="slideDown"
         />
 
+
     </div>
 </template>
 
@@ -123,6 +124,7 @@ import CancelIcon from "@/Components/Icons/CancelIcon";
 import LinkTitle from "@/Components/Link/LinkTitle";
 import LinkUrl from "@/Components/Link/LinkUrl";
 import LinkSlideDown from "@/Components/Link/LinkSlideDown";
+import ButtonInput from "./Input/ButtonInput";
 
 export default {
     name: "LinkItem",
@@ -131,8 +133,10 @@ export default {
             type: Object,
             default: {},
         },
+        iFrame: Object
     },
     components: {
+        ButtonInput,
         TrashIcon,
         HandleIcon,
         UploadIcon,
@@ -219,29 +223,15 @@ export default {
             if (input === "url") this.isEditingUrl = false;
         },
         persistEdit(input) {
-            const formKey = Object.keys(this.form).filter(key => key === input)
-            const formValue = this.form[formKey]
-            // we will create an object with dynamic key as
-            // it can be a title or url
-            const form = { [input] : formValue }
             this.$inertia.put(
                 this.route("link.title.url.update", this.link.id),
-                form,
+                this._buildTitleUrlFormData(input),
                 {
                     preserveScroll: true,
                     onStart: () => (this.processing = true),
                     onFinish: () => (this.processing = false),
-                    onError: (error) => {
-                        this.error = Object.assign({}, this.error, error);
-                    },
-                    onSuccess: () => {
-                        this.error = {};
-                        if (input === "title") {
-                            this.isEditingTitle = false;
-                        } else {
-                            this.isEditingUrl = false;
-                        }
-                    },
+                    onError: (error) => (this.error = Object.assign({}, this.error, error)),
+                    onSuccess: () => (this._titleUrlUpdateSuccessActions(input))
                 }
             );
         },
@@ -255,9 +245,34 @@ export default {
                 this.route("link.delete", this.link.id),
                 {
                     onStart: () => (this.processing = true),
-                    onSuccess: () => (this.processing = false),
+                    onSuccess: () => {
+                        this.processing = false
+                        this.$emitter.emit('reload')
+                        this.$emitter.emit('notify',{
+                            title: `Link was deleted successfully`
+                        })
+                    },
                 }
             );
+        },
+        _buildTitleUrlFormData(input){
+            const formKey = Object.keys(this.form).filter(key => key === input)
+            const formValue = this.form[formKey]
+            // we will create an object with dynamic key as
+            // it can be a title or url
+            return { [input] : formValue }
+        },
+        _titleUrlUpdateSuccessActions(input){
+            this.error = {};
+            //reload the iframe
+            if (input === 'title'){
+                this.$emitter.emit('reload')
+            }
+            if (input === "title") {
+                this.isEditingTitle = false;
+            } else {
+                this.isEditingUrl = false;
+            }
         }
     },
 };

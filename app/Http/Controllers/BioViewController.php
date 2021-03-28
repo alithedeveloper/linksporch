@@ -12,7 +12,7 @@ class BioViewController extends Controller
     {
         return Inertia::render('Bio/View', [
             'user' => $user,
-            'bio' => $bio->load('links')
+            'bio' => $bio->load(['links' => fn($query) => $query->latest()])
         ]);
     }
 }

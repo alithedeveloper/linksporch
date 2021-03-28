@@ -20,7 +20,10 @@
 
                 <div class="smartphone">
                     <div class="content">
-                        <iframe :src="`/${username}/${bioSlug}`" style="width:100%;border:none;height:100%" />
+                        <iframe
+                            ref="iframe"
+                            :src="`/${username}/${bioSlug}`"
+                               style="width:100%;border:none;height:100%" />
                     </div>
                 </div>
 
@@ -47,15 +50,22 @@ export default {
         shareLink(){
            return this.$page.props.bio.url
         }
+    },
+    mounted() {
+        this.$emitter.on('reload', () => {
+            this.$refs.iframe.contentWindow.location.reload()
+        })
     }
+
+
 }
 </script>
 
 <style scoped>
 .smartphone {
     position: relative;
-    width: 360px;
-    height: 640px;
+    width: 310px;
+    height: 600px;
     margin: 20px auto 0;
     border: 12px black solid;
     border-radius: 36px;
