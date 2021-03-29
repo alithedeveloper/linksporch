@@ -43,6 +43,9 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
     Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
         ->name('bio.show');
 
+    Route::get('/bios/{bio:slug}/appearance', \App\Http\Controllers\BioAppearanceController::class)
+        ->name('bio.appearance');
+
     // Bio Status
     Route::put('/bio/{bio:slug}/status', BioStatusController::class)
         ->name('bio.status.update');

@@ -1,0 +1,17 @@
+PINK PRESET
+----------
+Background color : #FB6ABD
+Links Color      : #FCF9F9
+Text Color       : #FCF9F9
+
+INDIGO PRESET
+----------
+Background color : #6066FA
+Links Color      : #F5F9FC
+Text Color       : #F5F9FC
+
+BLUE PRESET
+----------
+Background color : #2F7AF9
+Links Color      : #F6FBFD
+Text Color       : #F6FBFD
