@@ -18,14 +18,11 @@ class CreateLinksTable extends Migration
             $table->foreignId('bio_id')->index()->constrained();
             $table->foreignId('link_type_id')->index()->constrained();
             $table->string('title')->nullable();
-            $table->text('description')->nullable();
             $table->string('icon')->nullable();
             $table->string('url')->nullable();
             $table->boolean('is_active')->default(false);
             $table->string('leap_link')->nullable();
             $table->dateTime('schedule')->nullable();
-            $table->string('text_color',60)->nullable();
-            $table->string('background_color')->nullable();
             $table->timestamps();
         });
     }
