@@ -22,13 +22,21 @@
         "browser-sync-webpack-plugin": "^2.2.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14",
+        "postcss": "^8.2.8",
         "postcss-import": "^12.0.1",
-        "tailwindcss": "^2.0.1",
+        "tailwindcss": "^2.0.4",
         "vue": "^3.0.5",
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
-        "vue3-click-away": "^1.1.0"
+        "@tailwindcss/jit": "^0.1.9",
+        "ant-design-vue": "^1.7.4",
+        "luxon": "^1.26.0",
+        "mitt": "^2.1.0",
+        "postmate": "^1.5.2",
+        "sass-loader": "^11.0.1",
+        "vue-datetime": "^1.0.0-beta.14",
+        "vue3-click-away": "^1.1.0",
+        "weekstart": "^1.1.0"
     }
 }
