@@ -1073,6 +1073,8 @@ video {
 	align-items: flex-end;
 }.items-start {
 	align-items: flex-start;
+}.items-stretch {
+	align-items: stretch;
 }.justify-between {
 	justify-content: space-between;
 }.justify-center {
@@ -1433,8 +1435,6 @@ video {
 }.text-xl {
 	font-size: 1.25rem;
 	line-height: 1.75rem;
-}.text-\[10px\] {
-	font-size: 10px;
 }.font-medium {
 	font-weight: 500;
 }.font-semibold {
@@ -1519,6 +1519,9 @@ video {
 }.text-yellow-300 {
 	--tw-text-opacity: 1;
 	color: rgba(252, 211, 77, var(--tw-text-opacity));
+}.text-blue-600 {
+	--tw-text-opacity: 1;
+	color: rgba(37, 99, 235, var(--tw-text-opacity));
 }.text-indigo-100 {
 	--tw-text-opacity: 1;
 	color: rgba(224, 231, 255, var(--tw-text-opacity));
@@ -1609,6 +1612,8 @@ video {
 	transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }.ease-linear {
 	transition-timing-function: linear;
+}.focus-within\:z-10:focus-within {
+	z-index: 10;
 }.focus-within\:opacity-100:focus-within {
 	opacity: 1;
 }.focus-within\:ring-2:focus-within {
@@ -1725,13 +1730,13 @@ video {
 	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
 	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
 	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}.focus\:ring-0:focus {
-	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }.focus\:ring-1:focus {
 	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
 	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}.focus\:ring-0:focus {
+	--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+	--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
 	box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }.focus\:ring-inset:focus {
 	--tw-ring-inset: inset;

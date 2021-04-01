@@ -103,6 +103,7 @@
             v-show="slideDown"
             :content="displayContent"
             :svgs="svgs"
+            :link="link"
             v-model="slideDown"
         />
 

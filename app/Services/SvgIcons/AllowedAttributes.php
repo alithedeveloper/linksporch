@@ -14,6 +14,9 @@ class AllowedAttributes implements AllowedAttributesContract
     {
         return [
             // SVG
+            'width',
+            'class',
+            'height',
             'accent-height',
             'accumulate',
             'additivive',

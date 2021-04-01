@@ -23,7 +23,7 @@
                     <div class="content">
                         <iframe
                             ref="iframe"
-                            :src="`/${username}/${bioSlug}`"
+                            :src="`/dashboard/${username}/${bioSlug}/preview`"
                                style="width:100%;border:none;height:100%" @load="iframeStyles"/>
                     </div>
                 </div>

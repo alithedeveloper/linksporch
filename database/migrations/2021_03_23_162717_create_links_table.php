@@ -17,8 +17,8 @@ class CreateLinksTable extends Migration
             $table->id();
             $table->foreignId('bio_id')->index()->constrained();
             $table->foreignId('link_type_id')->index()->constrained();
+            $table->foreignId('svg_id')->nullable()->constrained();
             $table->string('title')->nullable();
-            $table->string('icon')->nullable();
             $table->string('url')->nullable();
             $table->boolean('is_active')->default(false);
             $table->string('leap_link')->nullable();

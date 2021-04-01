@@ -14,24 +14,34 @@
         </div>
         <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="bg-white shadow rounded-b-lg">
-            <div class="px-4 py-5 sm:p-6">
+            <div class="flex items-center px-4 py-5 sm:p-6">
+                <template v-if="svgIconExists">
+                    <inline-svg remove-attributes="true"
+                                :markup="svgIcon.markup"
+                                classes="text-gray-500 w-[8rem] h-[8rem] mr-4"
+                    />
+                </template>
+                    <div>
+                        <p class="max-w-xl mt-2 text-sm text-gray-500">
+                            {{ content.description }}
+                        </p>
 
-                <div class="max-w-xl mt-2 text-sm text-gray-500">
-                    <p>
-                        {{ content.description }}
-                    </p>
-                </div>
-                <div class="mt-2">
-                    <button-input
-                        classes="bg-indigo-500 text-indigo-100 hover:bg-indigo-700 focus:ring-indigo-500"
-                        linkType="linkType"
-                        @click="clicked(content.name)"
-                    >{{ content.buttonText }}</button-input>
-                </div>
+                        <button-input
+                            classes="bg-indigo-500 text-indigo-100 hover:bg-indigo-700 focus:ring-indigo-500 mt-2"
+                            linkType="linkType"
+                            @click="onButtonClick(content.name)"
+                        >{{ content.buttonText }}</button-input>
+                    </div>
+
             </div>
         </div>
     </div>
-        <svg-modal :svgs="svgs" :showIcons="showIcons"/>
+        <svg-modal
+            :svgs="svgs"
+            v-model:show-icons="showIcons"
+            :link="link"
+            v-model:svg-icon="svgIcon"
+        />
     </div>
 
 </template>
@@ -39,16 +49,21 @@
 import ButtonInput from "@/Components/Input/ButtonInput";
 import CancelIcon from "../Icons/CancelIcon";
 import SvgModal from "../SvgModal";
+import InlineSvg from "../InlineSvg";
 
 export default {
     name: "LinkSlideDown",
-    components: {SvgModal, CancelIcon, ButtonInput},
+    components: {SvgModal, CancelIcon, ButtonInput, InlineSvg},
     props: {
         content: {
             type: Object,
             default:{}
         },
         modelValue: Boolean,
+        link: {
+            type: Object,
+            default: {}
+        },
         svgs:{
             type: Array,
             default: []
@@ -57,10 +72,16 @@ export default {
     data(){
         return {
             showIcons : false,
+            svgIcon : {}
+        }
+    },
+    computed:{
+        svgIconExists(){
+            return Object.keys(this.svgIcon).length > 0
         }
     },
     methods:{
-        clicked(linkType){
+        onButtonClick(linkType){
             // action the linkType here
             if (linkType === 'icon_link'){
                 this.showIcons = !this.showIcons
@@ -68,7 +89,10 @@ export default {
         },
         onSlideDownCancelClick(){
             this.$emit('update:modelValue', !this.modelValue)
+        },
+        updateSvgIcon(svg){
+            console.log(svg)
         }
-    },
+    }
 }
 </script>

@@ -20,11 +20,17 @@
                    :href="link.url"
                    v-show="link.title"
                    class="border-2 border-green-100 p-2 mb-5 rounded mx-5
-                       text-center shadow-sm bg-green-200"
+                       text-center shadow-sm bg-green-200 flex items-center justify-center"
                    :style="`background:${styles.linkColor}; color:${styles.linkTextColor}`"
-                >{{ link.title }}</a>
-
-
+                >
+                   <template v-if="link.svg.markup">
+                       <inline-svg
+                           :markup="link.svg.markup"
+                           removeAttributes="true"
+                           classes="w-8 h-8 mr-2"
+                       />
+                   </template> <div>{{ link.title }}</div>
+                </a>
             </div>
         </div>
 
@@ -33,9 +39,10 @@
 </template>
 
 <script>
+import InlineSvg from "../../Components/InlineSvg";
 export default {
     name: "View",
-    components: {},
+    components: { InlineSvg },
     props: ['user', 'bio'],
     data() {
         return {
@@ -50,11 +57,9 @@ export default {
     },
     mounted() {
         window.addEventListener('message', (e) => {
-            console.log(e.data)
             let messageData = e.data
             if (e.origin === 'http://localhost') {
                 this.styles = messageData
-                console.log(messageData)
             }
         });
 

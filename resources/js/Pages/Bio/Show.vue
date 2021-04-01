@@ -84,6 +84,7 @@ export default {
             .then(({data}) => {
                 this.svgs = data.svgs
             })
+
     }
 }
 </script>

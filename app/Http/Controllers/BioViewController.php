@@ -8,11 +8,17 @@ use Inertia\Inertia;
 
 class BioViewController extends Controller
 {
-    public function __invoke(User $user,Bio $bio)
+    public function __invoke(User $user, Bio $bio)
     {
         return Inertia::render('Bio/View', [
             'user' => $user,
-            'bio' => $bio->load(['links' => fn($query) => $query->latest()])
+            'bio'  => $bio->load([
+                'links' => function($query){
+                    $query->with(['svg' => function($query){
+                        $query->toBase()->select('id','markup');
+                    }])->latest();
+                }
+            ])
         ]);
     }
 }
