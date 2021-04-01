@@ -1,5 +1,6 @@
 <template>
     <div>
+    <div>
         <div class="py-2 bg-gray-200 flex shadow items-center justify-between">
             <p class="flex-1 block font-semibold text-center">{{ content.title }}</p>
             <span
@@ -30,27 +31,44 @@
             </div>
         </div>
     </div>
+        <svg-modal :svgs="svgs" :showIcons="showIcons"/>
+    </div>
+
 </template>
 <script>
 import ButtonInput from "@/Components/Input/ButtonInput";
 import CancelIcon from "../Icons/CancelIcon";
+import SvgModal from "../SvgModal";
+
 export default {
     name: "LinkSlideDown",
-    components: {CancelIcon, ButtonInput},
+    components: {SvgModal, CancelIcon, ButtonInput},
     props: {
         content: {
             type: Object,
             default:{}
         },
-        modelValue: Boolean
+        modelValue: Boolean,
+        svgs:{
+            type: Array,
+            default: []
+        }
+    },
+    data(){
+        return {
+            showIcons : false,
+        }
     },
     methods:{
         clicked(linkType){
             // action the linkType here
+            if (linkType === 'icon_link'){
+                this.showIcons = !this.showIcons
+            }
         },
         onSlideDownCancelClick(){
             this.$emit('update:modelValue', !this.modelValue)
         }
-    }
+    },
 }
 </script>

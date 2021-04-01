@@ -24,7 +24,10 @@
                 </div>
                 <div class="mt-5">
                     <div class="lg:px-32" id="bio-links">
-                        <link-item v-for="link in bio.links" :link="link" :key="link.id"/>
+                        <link-item v-for="link in bio.links"
+                                   :link="link"
+                                   :svgs="svgs"
+                                   :key="link.id"/>
                     </div>
                 </div>
             </div>
@@ -60,7 +63,8 @@ export default {
     },
     data(){
         return{
-            processing: false
+            processing: false,
+            svgs:[],
         }
     },
     methods: {
@@ -74,6 +78,12 @@ export default {
                 }
             })
         }
+    },
+    created() {
+        return axios.get('/api/svgs')
+            .then(({data}) => {
+                this.svgs = data.svgs
+            })
     }
 }
 </script>

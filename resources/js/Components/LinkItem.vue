@@ -102,6 +102,7 @@
         <link-slide-down
             v-show="slideDown"
             :content="displayContent"
+            :svgs="svgs"
             v-model="slideDown"
         />
 
@@ -133,7 +134,11 @@ export default {
             type: Object,
             default: {},
         },
-        iFrame: Object
+        iFrame: Object,
+        svgs: {
+            type: Array,
+            default: []
+        }
     },
     components: {
         ButtonInput,

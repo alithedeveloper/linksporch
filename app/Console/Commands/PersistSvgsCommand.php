@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PersistSvgsCommand extends Command
 {
@@ -61,6 +62,9 @@ class PersistSvgsCommand extends Command
 
         foreach (glob($icons_dir.'/*.svg') as $file) {
             $name = basename($file,'.svg');
+            if (Str::startsWith($name, 'brand')) {
+                $name = Str::replaceFirst('brand-', '', $name);
+            }
             $svg = file_get_contents($file);
 
             $cleanedSvg = $this->sanitizer->sanitize($svg);
@@ -74,10 +78,5 @@ class PersistSvgsCommand extends Command
 
         }
         return 0;
-    }
-
-    protected function removeAttributes()
-    {
-
     }
 }

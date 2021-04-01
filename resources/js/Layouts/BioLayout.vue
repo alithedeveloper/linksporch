@@ -11,7 +11,7 @@
                 </div>
                 <slot></slot>
             </section>
-            <aside class="hidden relative xl:flex xl:flex-col flex-shrink-0 w-5/12 border-l border-gray-200">
+            <aside class="hidden relative xl:flex xl:flex-col flex-shrink-0 w-5/12 border-l border-gray-200 z-[-1]">
                 <!-- Start secondary column (hidden on smaller screens) -->
                 <div class="bg-white px-6 flex items-center justify-between border-b-2 border-white">
                     <a href="#" class="py-4 block underline">{{ shareLink }}</a>
