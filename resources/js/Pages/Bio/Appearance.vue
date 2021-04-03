@@ -11,7 +11,7 @@
                                 <p class="text-sm font-medium text-gray-700 text-center mb-2 sr-only" aria-hidden="true">
                                     Photo
                                 </p>
-                                <div class="mt-1 lg:hidden">
+                                <div class="mt-1">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 inline-block rounded-full overflow-hidden h-12 w-12" aria-hidden="true">
                                             <img class="rounded-full h-full w-full" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=320&amp;h=320&amp;q=80" alt="">
@@ -26,15 +26,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="hidden relative rounded-full overflow-hidden lg:block">
-                                    <img class="relative rounded-full w-40 h-40" src="https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=4&amp;w=320&amp;h=320&amp;q=80" alt="">
-                                    <label for="user-photo" class="absolute inset-0 w-full h-full bg-black bg-opacity-75 flex items-center justify-center text-sm font-medium text-white opacity-0 hover:opacity-100 focus-within:opacity-100">
-                                        <span>Change</span>
-                                        <span class="sr-only"> user photo</span>
-                                        <input type="file" id="user-photo" name="user-photo" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer border-gray-300 rounded-md">
-                                    </label>
                                 </div>
                             </div>
                             <div class="flex-grow space-y-6 lg:ml-6">

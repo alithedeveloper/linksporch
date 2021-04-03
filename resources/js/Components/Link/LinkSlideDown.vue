@@ -77,7 +77,15 @@ export default {
     },
     computed:{
         svgIconExists(){
-            return Object.keys(this.svgIcon).length > 0
+            return Object.keys(this.svgIcon).length > 0 &&
+                this.content.name === 'icon_link'
+        }
+    },
+    watch:{
+        // we need to emit the event for z-index of sidebar
+        // in Bio layout
+        showIcons(newValue) {
+            this.$emitter.emit('modal-activation', { show: newValue})
         }
     },
     methods:{
@@ -89,9 +97,6 @@ export default {
         },
         onSlideDownCancelClick(){
             this.$emit('update:modelValue', !this.modelValue)
-        },
-        updateSvgIcon(svg){
-            console.log(svg)
         }
     }
 }

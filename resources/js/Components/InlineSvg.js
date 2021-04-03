@@ -63,6 +63,14 @@ export default {
             type: String,
             required: true
         },
+        tag:{
+           type: String,
+           default: 'div'
+        },
+        tagClasses:{
+            type: String,
+            default: '',
+        },
         title: {
             type: String,
             required: false,
@@ -86,10 +94,17 @@ export default {
             type: Number,
             required: false,
             default: null
+        },
+        isClicked:{
+            type: Function,
+            default: () => {}
         }
     },
     render() {
-        return h('div', {
+        // let tagClasses = this.tagClasses.split(' ')
+        return h(this.tag, {
+            onClick : $event => this.$emit('isClicked'),
+            class : this.tagClasses,
             innerHTML: new Svg(this.markup, this.removeAttributes)
                 .classes(this.classes)
                 .height(this.height)

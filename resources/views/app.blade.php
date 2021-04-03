@@ -21,8 +21,8 @@
     <body class="font-sans text-sm antialiased font-normal">
         @inertia
 
-{{--        @if (app()->isLocal())--}}
-{{--            <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>--}}
-{{--        @endif--}}
+        @if (app()->isLocal())
+            <script src="http://localhost:3000/browser-sync/browser-sync-client.js"></script>
+        @endif
     </body>
 </html>

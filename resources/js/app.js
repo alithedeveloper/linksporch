@@ -5,6 +5,7 @@ import { createApp, h } from 'vue';
 import { App as InertiaApp, plugin as InertiaPlugin } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import mitt from 'mitt';
+import ClickOutside from "./Services/ClickOutside";
 
 // Vue.prototype.$route = route
 
@@ -20,6 +21,8 @@ const app = createApp({
 })
     .mixin({ methods: { route } })
     .use(InertiaPlugin)
+
+app.directive('click-outside', ClickOutside)
 
 app.config.globalProperties.$emitter = emitter
 app.config.globalProperties.$route = route
