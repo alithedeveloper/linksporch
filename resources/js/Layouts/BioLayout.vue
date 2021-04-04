@@ -24,7 +24,8 @@
                             <iframe
                                 ref="iframe"
                                 :src="`/dashboard/${username}/${bioSlug}/preview`"
-                                style="width:100%;border:none;height:100%;pointer-events: none" @load="iframeStyles"/>
+                                style="visibility:hidden;width:100%;border:none;height:100%;pointer-events: none"
+                                @load="iframeStyles"/>
                         </div>
                     </div>
                 </div>
@@ -61,6 +62,7 @@ export default {
     },
     methods:{
         iframeStyles(data){
+            this.$refs.iframe.style.visibility = 'visible'
              data = JSON.stringify(data)
             // const style =
             //     '.layout__wrapper {background:red;} ' +
@@ -75,14 +77,8 @@ export default {
 
         },
     },
-    created() {
-
-    },
     mounted() {
         this.frame = this.$refs.iframe.contentWindow
-        this.$emitter.on('reload', () => {
-            this.$refs.iframe.contentWindow.location.reload()
-        })
         this.$emitter.on('iframe', (payload) => {
             this.iframeStyles(payload)
         })

@@ -17,7 +17,8 @@ class BioViewController extends Controller
                     $query->with(['svg' => function($query){
                         $query->toBase()->select('id','markup');
                     }])->latest();
-                }
+                },
+                'image'
             ])
         ]);
     }
