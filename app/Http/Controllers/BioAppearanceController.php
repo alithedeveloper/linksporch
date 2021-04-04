@@ -15,8 +15,9 @@ class BioAppearanceController extends Controller
      */
     public function __invoke(Bio $bio, Request $request)
     {
-       return Inertia::render('Bio/Appearance', [
-           'bio' => $bio
-       ]);
+        $bio->load('image');
+        return Inertia::render('Bio/Appearance', [
+            'bio' => $bio
+        ]);
     }
 }

@@ -3,7 +3,6 @@
         <div class="relative z-0 flex overflow-hidden">
             <section class="w-full lg:w-8/12 relative z-0 overflow-y-auto focus:outline-none" tabindex="0">
                 <div class="bg-white px-6 flex items-center">
-
                     <inertia-link :href="route('bio.show',bioSlug)" class="border-b-2 mr-8 border-black inline-block px-2 py-4">Links</inertia-link>
                     <inertia-link :href="route('bio.appearance',bioSlug)" class="border-b-2 mr-8 border-black inline-block px-2 py-4">Appearance</inertia-link>
                     <a href="#" class="border-b-2 mr-8 border-black inline-block px-2 py-4">Settings</a>

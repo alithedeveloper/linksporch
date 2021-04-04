@@ -45,7 +45,7 @@
 
                 <a href="#" class="text-gray-400 hover:bg-blue-dark flex-shrink-0 inline-flex items-center justify-center h-14 w-14 rounded-lg">
                     <span class="sr-only">Spam</span>
-                    <user-icon classes="w-7 h-7 text-blue-50"/>
+                    <profile-icon class="w-7 h-7 text-blue-50"/>
                 </a>
             </div>
         </div>
@@ -55,10 +55,10 @@
 <script>
 import LogoIcon from "../Components/Icons/LogoIcon";
 import ChatIcon from "../Components/Icons/ChatIcon";
-import UserIcon from "../Components/Icons/ProfileIcon";
+import ProfileIcon from "../Components/Icons/ProfileIcon";
 export default {
     name: "SideBarNav",
-    components: {UserIcon, LogoIcon, ChatIcon}
+    components: {ProfileIcon, LogoIcon, ChatIcon}
 }
 </script>
 
