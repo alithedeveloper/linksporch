@@ -34,7 +34,8 @@ class AvatarController extends Controller
         ]);
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'path'    => '/storage/'. $path
         ]);
 
     }

@@ -18251,26 +18251,31 @@ __webpack_require__.r(__webpack_exports__);
     uploadedImage: {
       type: String
     },
+    imageSrc: {
+      type: String
+    },
     bio: {
       type: Object,
       required: true
     }
   },
-  data: function data() {
-    return {
-      imageLoading: false
-    };
-  },
-  watch: {
-    imageLoading: function imageLoading(value) {
-      if (value) {
-        this.img.loading = true;
-      }
-    }
-  },
   methods: {
     onClickCancelBtn: function onClickCancelBtn() {
       this.$emit('update:upload-image-modal', !this.uploadImageModal);
+    },
+    pixelsRestriction: function pixelsRestriction(_ref) {
+      var minWidth = _ref.minWidth,
+          minHeight = _ref.minHeight,
+          maxWidth = _ref.maxWidth,
+          maxHeight = _ref.maxHeight,
+          imageWidth = _ref.imageWidth,
+          imageHeight = _ref.imageHeight;
+      return {
+        minWidth: minWidth,
+        minHeight: minHeight,
+        maxWidth: maxWidth,
+        maxHeight: maxHeight
+      };
     },
     onSaveImage: function onSaveImage() {
       var _this = this;
@@ -18283,24 +18288,17 @@ __webpack_require__.r(__webpack_exports__);
         canvas.toBlob(function (blob) {
           form.append('avatar', blob);
           axios.post("/api/bio/".concat(_this.bio.id, "/avatar"), form).then(function (response) {
-            _this.$emit('update:uploaded-image', canvas.toDataURL('image/jpeg'));
+            console.log(response);
+
+            _this.$emit('update:uploaded-image', response.data.path);
 
             _this.$emit('update:upload-image-modal', !_this.uploadImageModal);
+
+            _this.$emit('update:image-src', response.data.path);
           })["catch"](function (error) {});
         });
-      } // data.append('image', this.originalImage)
-      // data.append('coordinates', result.coordinates)
-
-    },
-    ready: function ready() {
-      this.imageLoading = false;
-    },
-    error: function error() {
-      this.imageLoading = false;
-      console.log('there has been error');
+      }
     }
-  },
-  created: function created() {// console.log(this.showImageModal)
   }
 });
 
@@ -19902,7 +19900,7 @@ __webpack_require__.r(__webpack_exports__);
       iFrameWindow: null,
       uploadImageModal: false,
       uploadedImage: '',
-      originalImage: '',
+      imageSrc: '',
       form: {
         title: this.bio.title,
         bio: this.bio.description
@@ -19919,13 +19917,6 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     presetsPath: function presetsPath() {
       return this.$page.props.presets_path;
-    },
-    imageUrl: function imageUrl() {
-      if (this.bio.image && this.bio.image.path.length) {
-        return "/".concat(this.bio.image.path);
-      }
-
-      return false;
     }
   },
   methods: {
@@ -19964,10 +19955,7 @@ __webpack_require__.r(__webpack_exports__);
       var input = event.target; // Ensure that you have a file before attempting to read it
 
       if (input.files && input.files[0]) {
-        //keep a reference to original file as we will need to
-        // send this to server
-        this.originalImage = input.files[0]; // create a new FileReader to read this image and convert to base64 format
-
+        // create a new FileReader to read this image and convert to base64 format
         var reader = new FileReader(); // Define a callback function to run, when FileReader finishes its job
 
         reader.onload = function (e) {
@@ -19981,6 +19969,14 @@ __webpack_require__.r(__webpack_exports__);
         this.uploadImageModal = !this.uploadImageModal;
       }
     }
+  },
+  mounted: function mounted() {
+    if (this.bio.image && this.bio.image.path.length) {
+      this.imageSrc = "/".concat(this.bio.image.path);
+      return;
+    }
+
+    this.imageSrc = false;
   },
   created: function created() {
     var _this2 = this;
@@ -22344,7 +22340,7 @@ var _hoisted_1 = {
   "aria-modal": "true"
 };
 var _hoisted_2 = {
-  "class": "flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+  "class": "flex items-end justify-center min-h-screen pb-20 text-center sm:block sm:p-0"
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
@@ -22362,22 +22358,18 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_5 = {
-  "class": "inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+  "class": "inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle sm:max-w-2xl sm:w-full p-2 mx-5"
 };
 var _hoisted_6 = {
-  "class": "mt-3 text-center sm:mt-5"
+  "class": "text-center"
 };
 var _hoisted_7 = {
-  "class": "mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"
+  "class": "my-5 md:px-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_loading_beat = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("loading-beat");
-
   var _component_cropper = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("cropper");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This example requires Tailwind CSS v2.0+ "), $props.uploadImageModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Background overlay, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0\"\n                To: \"opacity-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100\"\n                To: \"opacity-0\"\n            "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This element is to trick the browser into centering the modal contents. "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Modal panel, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n                To: \"opacity-100 translate-y-0 sm:scale-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100 translate-y-0 sm:scale-100\"\n                To: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n            "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [$data.imageLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_loading_beat, {
-    key: 0
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cropper, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This example requires Tailwind CSS v2.0+ "), $props.uploadImageModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Background overlay, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0\"\n                To: \"opacity-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100\"\n                To: \"opacity-0\"\n            "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This element is to trick the browser into centering the modal contents. "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Modal panel, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n                To: \"opacity-100 translate-y-0 sm:scale-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100 translate-y-0 sm:scale-100\"\n                To: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n            "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cropper, {
     ref: "cropper",
     "class": "example-cropper",
     src: $props.uploadedImage,
@@ -22385,17 +22377,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       width: 200,
       height: 200
     },
+    "default-boundaries": "fill",
     "stencil-props": {
-      handlers: {},
       movable: true,
       resizable: false,
       aspectRatio: 1
     },
-    onReady: $options.ready,
-    onError: $options.error
+    "size-restrictions-algorithm": $options.pixelsRestriction
   }, null, 8
   /* PROPS */
-  , ["src", "onReady", "onError"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["src", "size-restrictions-algorithm"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.onSaveImage && $options.onSaveImage.apply($options, arguments);
     }),
@@ -25544,7 +25535,7 @@ var _hoisted_11 = {
   "class": "flex flex-col md:flex-row ml-5 w-full"
 };
 var _hoisted_12 = {
-  "class": "ml-5 rounded-md shadow-sm w-1/2 bg-green hover:bg-green-dark focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green"
+  "class": "md:ml-5 rounded-md shadow-sm w-full md:w-1/2 bg-green hover:bg-green-dark focus-within:ring-2\n                                                    focus-within:ring-offset-2 focus-within:ring-green"
 };
 var _hoisted_13 = {
   "class": "group relative rounded py-3 px-3 h-full flex items-center justify-center"
@@ -25642,14 +25633,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_bio_layout, null, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Bio "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [$options.imageUrl.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+          return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Bio "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [$data.imageSrc && $data.imageSrc.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
             key: 0,
             "class": "rounded-full h-full w-full",
-            src: $options.imageUrl,
+            src: $data.imageSrc,
             alt: ""
           }, null, 8
           /* PROPS */
-          , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$options.imageUrl ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_profile_icon, {
+          , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$data.imageSrc ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_profile_icon, {
             "class": "w-[7rem] h-[7rem] text-gray-300"
           })])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_upload_simple_icon, {
             "class": "w-5 h-5"
@@ -25696,12 +25687,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "onUpdate:uploaded-image": _cache[5] || (_cache[5] = function ($event) {
               return $data.uploadedImage = $event;
             }),
+            "image-src": $data.imageSrc,
+            "onUpdate:image-src": _cache[6] || (_cache[6] = function ($event) {
+              return $data.imageSrc = $event;
+            }),
             bio: $props.bio
           }, null, 8
           /* PROPS */
-          , ["upload-image-modal", "uploaded-image", "bio"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/Bio"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+          , ["upload-image-modal", "uploaded-image", "image-src", "bio"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/Bio"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[6] || (_cache[6] = function ($event) {
+            onClick: _cache[7] || (_cache[7] = function ($event) {
               return $options.onClickPreset('pink');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
@@ -25711,7 +25706,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[7] || (_cache[7] = function ($event) {
+            onClick: _cache[8] || (_cache[8] = function ($event) {
               return $options.onClickPreset('blue');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
@@ -25721,7 +25716,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[8] || (_cache[8] = function ($event) {
+            onClick: _cache[9] || (_cache[9] = function ($event) {
               return $options.onClickPreset('green');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {

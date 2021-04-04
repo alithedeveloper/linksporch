@@ -14,17 +14,18 @@
                                 <div class="flex items-center flex-row">
                                     <div class="flex-shrink-0 inline-block rounded-full overflow-hidden w-[8rem] w-[8rem]" aria-hidden="true">
                                         <img
-                                            v-if="imageUrl.length"
-                                            class="rounded-full h-full w-full" :src="imageUrl" alt="">
+                                            v-if="imageSrc && imageSrc.length"
+                                            class="rounded-full h-full w-full" :src="imageSrc" alt="">
                                         <div
-                                            v-if="!imageUrl"
+                                            v-if="!imageSrc"
                                             class="w-full flex justify-center">
                                             <profile-icon class="w-[7rem] h-[7rem] text-gray-300" />
                                         </div>
 
                                     </div>
                                     <div class="flex flex-col md:flex-row ml-5 w-full">
-                                        <div class="ml-5 rounded-md shadow-sm w-1/2 bg-green hover:bg-green-dark focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-green">
+                                        <div class="md:ml-5 rounded-md shadow-sm w-full md:w-1/2 bg-green hover:bg-green-dark focus-within:ring-2
+                                                    focus-within:ring-offset-2 focus-within:ring-green">
                                             <div class="group relative rounded py-3 px-3 h-full flex items-center justify-center">
                                                 <label for="user_photo" class="relative flex items-center justify-center text-sm leading-4 font-medium text-white pointer-events-none">
                                                     <upload-simple-icon class="w-5 h-5"/>
@@ -79,6 +80,7 @@
                 <upload-image-modal
                     v-model:upload-image-modal="uploadImageModal"
                     v-model:uploaded-image="uploadedImage"
+                    v-model:image-src="imageSrc"
                     :bio="bio"
                 />
                <!--/Bio-->
@@ -139,7 +141,7 @@ export default {
           iFrameWindow : null,
           uploadImageModal: false,
           uploadedImage:'',
-          originalImage: '',
+          imageSrc:'',
           form: {
               title: this.bio.title,
               bio: this.bio.description,
@@ -155,12 +157,7 @@ export default {
         presetsPath(){
             return this.$page.props.presets_path
         },
-        imageUrl(){
-            if(this.bio.image && this.bio.image.path.length){
-                return `/${this.bio.image.path}`
-            }
-            return false;
-        }
+
     },
     methods: {
         onClick(bgColor) {
@@ -197,9 +194,6 @@ export default {
             let input = event.target;
             // Ensure that you have a file before attempting to read it
             if (input.files && input.files[0]) {
-                //keep a reference to original file as we will need to
-                // send this to server
-                this.originalImage = input.files[0]
                 // create a new FileReader to read this image and convert to base64 format
                 const reader = new FileReader();
                 // Define a callback function to run, when FileReader finishes its job
@@ -211,11 +205,16 @@ export default {
                 // Start the reader job - read file as a data url (base64 format)
                 reader.readAsDataURL(input.files[0]);
                 this.uploadImageModal = !this.uploadImageModal
-
             }
+        },
 
-
+    },
+    mounted() {
+        if(this.bio.image && this.bio.image.path.length){
+            this.imageSrc = `/${this.bio.image.path}`
+            return;
         }
+        this.imageSrc = false;
     },
     created() {
         this.$emitter.on('iframeWindow',(iframeWindow) => {
