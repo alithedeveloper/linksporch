@@ -3,7 +3,7 @@
         class="min-h-screen"
         :style="`background:${styles.background}`"
     >
-        <div class="grid grid-col-6">
+        <div class="max-w-3xl mx-auto">
             <div class="flex flex-col items-center pt-16">
             <span class="inline-block h20 w-20 rounded-full overflow-hidden bg-gray-100">
               <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
@@ -18,18 +18,18 @@
             <div class="flex flex-col">
                 <a v-for="(link,index) in bio.links" :key="index"
                    :href="link.url"
-                   v-show="link.title"
+                   v-show="link.title && link.is_active"
                    class="border-2 border-green-100 p-2 mb-5 rounded mx-5
                        text-center shadow-sm bg-green-200 flex items-center justify-center"
                    :style="`background:${styles.linkColor}; color:${styles.linkTextColor}`"
                 >
-                   <template v-if="link.svg.markup">
+                   <template v-if="link.svg && link.svg.markup.length">
                        <inline-svg
                            :markup="link.svg.markup"
                            removeAttributes="true"
-                           classes="w-8 h-8 mr-2"
+                           classes="w-6 h-6 mr-2"
                        />
-                   </template> <div>{{ link.title }}</div>
+                   </template> <p>{{ link.title }}</p>
                 </a>
             </div>
         </div>

@@ -1008,6 +1008,8 @@ video {
 	max-width: 42rem;
 }.max-w-4xl {
 	max-width: 56rem;
+}.max-w-3xl {
+	max-width: 48rem;
 }.flex-1 {
 	flex: 1 1 0%;
 }.flex-shrink-0 {
@@ -1500,6 +1502,8 @@ video {
 	letter-spacing: 0.1em;
 }.tracking-wider {
 	letter-spacing: 0.05em;
+}.tracking-wide {
+	letter-spacing: 0.025em;
 }.text-gray-500 {
 	--tw-text-opacity: 1;
 	color: rgba(107, 114, 128, var(--tw-text-opacity));

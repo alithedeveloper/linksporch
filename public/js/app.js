@@ -18110,7 +18110,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return _this.processing = true;
         },
         onSuccess: function onSuccess() {
-          return _this.processing = false;
+          _this.processing = false;
+
+          _this.$emitter.emit('reload');
         }
       });
     },
@@ -25877,7 +25879,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "grid grid-col-6"
+  "class": "max-w-3xl mx-auto"
 };
 var _hoisted_2 = {
   "class": "flex flex-col items-center pt-16"
@@ -25918,18 +25920,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       href: link.url,
       "class": "border-2 border-green-100 p-2 mb-5 rounded mx-5\n                       text-center shadow-sm bg-green-200 flex items-center justify-center",
       style: "background:".concat($data.styles.linkColor, "; color:").concat($data.styles.linkTextColor)
-    }, [link.svg.markup ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inline_svg, {
+    }, [link.svg && link.svg.markup.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inline_svg, {
       key: 0,
       markup: link.svg.markup,
       removeAttributes: "true",
-      classes: "w-8 h-8 mr-2"
+      classes: "w-6 h-6 mr-2"
     }, null, 8
     /* PROPS */
-    , ["markup"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.title), 1
+    , ["markup"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.title), 1
     /* TEXT */
     )], 12
     /* STYLE, PROPS */
-    , ["href"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, link.title]]);
+    , ["href"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, link.title && link.is_active]]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])], 4

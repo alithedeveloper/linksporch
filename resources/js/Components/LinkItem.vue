@@ -206,13 +206,17 @@ export default {
             }
 
             this.form.is_active = newToggleStatus;
+
             this.$inertia.put(
                 this.route("link.status.update", this.link.id),
                 {is_active: this.form.is_active},
                 {
                     preserveScroll: true,
                     onStart: () => (this.processing = true),
-                    onSuccess: () => (this.processing = false),
+                    onSuccess: () => {
+                        this.processing = false
+                        this.$emitter.emit('reload');
+                    },
                 }
             );
         },
