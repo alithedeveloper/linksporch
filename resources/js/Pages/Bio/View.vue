@@ -26,7 +26,7 @@
                    <template v-if="link.svg && link.svg.markup.length">
                        <inline-svg
                            :markup="link.svg.markup"
-                           removeAttributes="true"
+                           :removeAttributes=true
                            classes="w-6 h-6 mr-2"
                        />
                    </template> <p>{{ link.title }}</p>

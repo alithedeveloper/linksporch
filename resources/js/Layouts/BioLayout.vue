@@ -24,7 +24,8 @@
                             <iframe
                                 ref="iframe"
                                 :src="`/dashboard/${username}/${bioSlug}/preview`"
-                                style="width:100%;border:none;height:100%;pointer-events: none" @load="iframeStyles"/>
+                                style="width:100%;border:none;height:100%;pointer-events: none"
+                                @load="iframeStyles"/>
                         </div>
                     </div>
                 </div>
@@ -75,20 +76,19 @@ export default {
 
         },
     },
-    created() {
-
-    },
     mounted() {
         this.frame = this.$refs.iframe.contentWindow
-        this.$emitter.on('reload', () => {
-            this.$refs.iframe.contentWindow.location.reload()
-        })
         this.$emitter.on('iframe', (payload) => {
             this.iframeStyles(payload)
         })
         this.$emitter.emit('iframeWindow', this.$refs.iframe.contentWindow)
         this.$emitter.on('modal-activation', ({show}) => {
            this.modalIsOpen = show
+        })
+        this.$emitter.on('reload', () => {
+            if (this.$refs.iframe !== null){
+                this.$refs.iframe.contentWindow.location.reload()
+            }
         })
 
     }
