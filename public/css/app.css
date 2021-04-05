@@ -755,6 +755,8 @@ video {
 	pointer-events: none;
 }.pointer-events-auto {
 	pointer-events: auto;
+}.visible {
+	visibility: visible;
 }.relative {
 	position: relative;
 }.absolute {
@@ -882,6 +884,8 @@ video {
 	margin-bottom: 15rem;
 }.-ml-1 {
 	margin-left: -0.25rem;
+}.ml-10 {
+	margin-left: 2.5rem;
 }.flex {
 	display: flex;
 }.inline-flex {
@@ -990,6 +994,8 @@ video {
 	width: 8rem;
 }.w-\[7rem\] {
 	width: 7rem;
+}.w-1\/4 {
+	width: 25%;
 }.min-w-0 {
 	min-width: 0px;
 }.max-w-screen-xl {
@@ -1396,6 +1402,9 @@ video {
 }.py-0 {
 	padding-top: 0px;
 	padding-bottom: 0px;
+}.py-2\.5 {
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
 }.pt-6 {
 	padding-top: 1.5rem;
 }.pt-5 {
