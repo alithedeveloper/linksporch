@@ -996,6 +996,10 @@ video {
 	width: 7rem;
 }.w-1\/4 {
 	width: 25%;
+}.w-3\/5 {
+	width: 60%;
+}.w-2\/5 {
+	width: 40%;
 }.min-w-0 {
 	min-width: 0px;
 }.max-w-screen-xl {

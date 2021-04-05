@@ -22068,10 +22068,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 8
   /* PROPS */
   , ["markup"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.content.name === 'schedule_link' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_date_time, {
-    wrapperClass: "w-3/4",
+    wrapperClass: "w-3/5",
     classes: "border-gray-300 rounded py-2 w-full"
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_button_input, {
-    classes: "w-1/4 ml-10 bg-indigo-500 border-2 text-indigo-100 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500",
+    classes: "w-2/5 ml-5 bg-indigo-500 border-2 text-indigo-100 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500",
     linkType: "linkType",
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.onButtonClick($props.content.name);
