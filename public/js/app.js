@@ -18290,13 +18290,13 @@ __webpack_require__.r(__webpack_exports__);
         canvas.toBlob(function (blob) {
           form.append('avatar', blob);
           axios.post("/api/bio/".concat(_this.bio.id, "/avatar"), form).then(function (response) {
-            console.log(response);
-
             _this.$emit('update:uploaded-image', response.data.path);
 
             _this.$emit('update:upload-image-modal', !_this.uploadImageModal);
 
             _this.$emit('update:image-src', response.data.path);
+
+            _this.$emitter.emit('reload');
           })["catch"](function (error) {});
         });
       }
@@ -19267,6 +19267,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     iframeStyles: function iframeStyles(data) {
+      this.$refs.iframe.style.visibility = 'visible';
       data = JSON.stringify(data); // const style =
       //     '.layout__wrapper {background:red;} ' +
       //     'body {background: red !important;} '
@@ -22372,36 +22373,64 @@ var _hoisted_7 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_cropper = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("cropper");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This example requires Tailwind CSS v2.0+ "), $props.uploadImageModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Background overlay, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0\"\n                To: \"opacity-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100\"\n                To: \"opacity-0\"\n            "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This element is to trick the browser into centering the modal contents. "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("\n              Modal panel, show/hide based on modal state.\n\n              Entering: \"ease-out duration-300\"\n                From: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n                To: \"opacity-100 translate-y-0 sm:scale-100\"\n              Leaving: \"ease-in duration-200\"\n                From: \"opacity-100 translate-y-0 sm:scale-100\"\n                To: \"opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95\"\n            "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cropper, {
-    ref: "cropper",
-    "class": "example-cropper",
-    src: $props.uploadedImage,
-    "stencil-size": {
-      width: 200,
-      height: 200
-    },
-    "default-boundaries": "fill",
-    "stencil-props": {
-      movable: true,
-      resizable: false,
-      aspectRatio: 1
-    },
-    "size-restrictions-algorithm": $options.pixelsRestriction
-  }, null, 8
-  /* PROPS */
-  , ["src", "size-restrictions-algorithm"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[1] || (_cache[1] = function () {
-      return $options.onSaveImage && $options.onSaveImage.apply($options, arguments);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This example requires Tailwind CSS v2.0+ "), $props.uploadImageModal ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    "enter-active-class": "ease-out duration-300",
+    "enter-from-class": "opacity-0",
+    "enter-to-class": "opacity-100",
+    "leave-active-class": "ease-in duration-200",
+    "leave-from-class": "opacity-100",
+    "leave-to-class": "opacity-0"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_3];
     }),
-    type: "button",
-    "class": "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
-  }, " Save "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[2] || (_cache[2] = function () {
-      return $options.onClickCancelBtn && $options.onClickCancelBtn.apply($options, arguments);
+    _: 1
+    /* STABLE */
+
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" This element is to trick the browser into centering the modal contents. "), _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    "enter-active-class": "ease-out duration-300",
+    "enter-from-class": "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95",
+    "enter-to-class": "opacity-100 translate-y-0 sm:scale-100",
+    "leave-active-class": "ease-in duration-200",
+    "leave-from-class": "opacity-100 translate-y-0 sm:scale-100",
+    "leave-to-class": "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_cropper, {
+        ref: "cropper",
+        "class": "example-cropper",
+        src: $props.uploadedImage,
+        "stencil-size": {
+          width: 200,
+          height: 200
+        },
+        "default-boundaries": "fill",
+        "stencil-props": {
+          movable: true,
+          resizable: false,
+          aspectRatio: 1
+        },
+        "size-restrictions-algorithm": $options.pixelsRestriction
+      }, null, 8
+      /* PROPS */
+      , ["src", "size-restrictions-algorithm"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        onClick: _cache[1] || (_cache[1] = function () {
+          return $options.onSaveImage && $options.onSaveImage.apply($options, arguments);
+        }),
+        type: "button",
+        "class": "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:col-start-2 sm:text-sm"
+      }, " Save "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        onClick: _cache[2] || (_cache[2] = function () {
+          return $options.onClickCancelBtn && $options.onClickCancelBtn.apply($options, arguments);
+        }),
+        type: "button",
+        "class": "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+      }, " Cancel ")])])];
     }),
-    type: "button",
-    "class": "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-  }, " Cancel ")])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2112
+    _: 1
+    /* STABLE */
+
+  })])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2112
   /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */
   );
 }
@@ -25885,24 +25914,27 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "flex flex-col items-center pt-16"
 };
-
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_3 = {
   "class": "inline-block h20 w-20 rounded-full overflow-hidden bg-gray-100"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
+};
+var _hoisted_4 = {
+  key: 1,
   "class": "h-full w-full text-gray-300",
   fill: "currentColor",
   viewBox: "0 0 24 24"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("path", {
   d: "M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"
-})])], -1
+}, null, -1
 /* HOISTED */
 );
 
-var _hoisted_4 = {
+var _hoisted_6 = {
   "class": "flex flex-col"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inline_svg = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inline-svg");
@@ -25910,12 +25942,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
     "class": "min-h-screen",
     style: "background:".concat($data.styles.background)
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_3, [$props.bio.image ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+    key: 0,
+    src: "/".concat($props.bio.image.path),
+    alt: ""
+  }, null, 8
+  /* PROPS */
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), !$props.bio.image || !$props.bio.image.path ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_4, [_hoisted_5])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
     "class": "p-5 px-4 text-center text-green-50 text-sm",
     style: "color:".concat($data.styles.textColor)
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bio.description), 5
   /* TEXT, STYLE */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bio.links, function (link, index) {
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bio.links, function (link, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
       key: index,
       href: link.url,
@@ -25928,7 +25966,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       classes: "w-6 h-6 mr-2"
     }, null, 8
     /* PROPS */
-    , ["markup"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.title), 1
+    , ["markup"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(link.title), 1
     /* TEXT */
     )], 12
     /* STYLE, PROPS */
