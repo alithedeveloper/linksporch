@@ -24,7 +24,7 @@
                             <iframe
                                 ref="iframe"
                                 :src="`/dashboard/${username}/${bioSlug}/preview`"
-                                style="visibility:hidden;width:100%;border:none;height:100%;pointer-events: none"
+                                style="width:100%;border:none;height:100%;pointer-events: none"
                                 @load="iframeStyles"/>
                         </div>
                     </div>
@@ -85,6 +85,11 @@ export default {
         this.$emitter.emit('iframeWindow', this.$refs.iframe.contentWindow)
         this.$emitter.on('modal-activation', ({show}) => {
            this.modalIsOpen = show
+        })
+        this.$emitter.on('reload', () => {
+            if (this.$refs.iframe !== null){
+                this.$refs.iframe.contentWindow.location.reload()
+            }
         })
 
     }

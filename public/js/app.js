@@ -19279,14 +19279,10 @@ __webpack_require__.r(__webpack_exports__);
       this.frame.postMessage(data, '*');
     }
   },
-  created: function created() {},
   mounted: function mounted() {
     var _this = this;
 
     this.frame = this.$refs.iframe.contentWindow;
-    this.$emitter.on('reload', function () {
-      _this.$refs.iframe.contentWindow.location.reload();
-    });
     this.$emitter.on('iframe', function (payload) {
       _this.iframeStyles(payload);
     });
@@ -19294,6 +19290,11 @@ __webpack_require__.r(__webpack_exports__);
     this.$emitter.on('modal-activation', function (_ref) {
       var show = _ref.show;
       _this.modalIsOpen = show;
+    });
+    this.$emitter.on('reload', function () {
+      if (_this.$refs.iframe !== null) {
+        _this.$refs.iframe.contentWindow.location.reload();
+      }
     });
   }
 });
@@ -25923,7 +25924,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [link.svg && link.svg.markup.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inline_svg, {
       key: 0,
       markup: link.svg.markup,
-      removeAttributes: "true",
+      removeAttributes: true,
       classes: "w-6 h-6 mr-2"
     }, null, 8
     /* PROPS */
