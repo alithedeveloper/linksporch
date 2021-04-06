@@ -14,7 +14,7 @@ class AvatarController extends Controller
      * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function __invoke(Bio $bio, Request $request)
+    public function update(Bio $bio, Request $request)
     {
         request()->file([
             'avatar' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -28,15 +28,36 @@ class AvatarController extends Controller
         }
 
         $bio->image()->create([
-           'user_id' => auth()->user()->id,
-            'path' => 'storage/'. $path,
-            'name'  => $path
+            'user_id' => auth()->user()->id,
+            'path'    => 'storage/'.$path,
+            'name'    => $path
         ]);
 
         return response()->json([
             'success' => true,
-            'path'    => '/storage/'. $path
+            'path'    => '/storage/'.$path
         ]);
 
+    }
+
+    /**
+     * @param  Bio  $bio
+     * @param $avatar
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function destroy(Bio $bio, $avatar, Request $request)
+    {
+        if (!$bio->image()->exists()) {
+            return response()->json([
+                'status' => false
+            ]);
+        }
+        Storage::disk('public')->delete($bio->image->name);
+        $bio->image()->delete();
+        
+        return response()->json([
+            'success' => true,
+        ]);
     }
 }

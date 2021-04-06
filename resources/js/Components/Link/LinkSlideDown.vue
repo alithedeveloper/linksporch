@@ -24,15 +24,10 @@
                     </template>
                     <div v-if="content.name === 'schedule_link'" class="w-full flex items-center">
                         <date-time
-                            wrapperClass="w-3/5"
-                            classes="border-gray-300 rounded py-2 w-full" />
-                        <button-input
-                            classes="w-2/5 ml-5 bg-indigo-500 border-2 text-indigo-100 hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500"
-                            linkType="linkType"
-                            @click="onButtonClick(content.name)"
-                        >{{ content.buttonText }}
-                        </button-input>
-
+                            :link="link"
+                            wrapperClass="w-full flex items-center"
+                            classes="border-gray-300 rounded py-2 w-full"
+                        />
                     </div>
                     <div v-else>
                         <p class="max-w-xl mt-2 text-sm text-gray-500">
@@ -60,11 +55,13 @@
 
 </template>
 <script>
+import moment from 'moment'
 import ButtonInput from "@/Components/Input/ButtonInput";
 import CancelIcon from "../Icons/CancelIcon";
 import SvgModal from "../SvgModal";
 import InlineSvg from "../InlineSvg";
 import DateTime from "../DateTime";
+
 
 export default {
     name: "LinkSlideDown",
@@ -87,7 +84,8 @@ export default {
     data() {
         return {
             showIcons: false,
-            svgIcon: {}
+            svgIcon: {},
+            scheduledAt: moment().format(),
         }
     },
     computed: {

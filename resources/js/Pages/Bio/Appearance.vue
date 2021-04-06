@@ -39,10 +39,13 @@
                                                 >
                                             </div>
                                         </div>
-                                        <button type="button" class="w-full mt-2 md:ml-2 md:w-1/2 md:mt-0 inline-flex items-center justify-center px-6 py-3 border border-transparent shadow-sm text-sm font-medium rounded text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                           <simple-trash-icon class="w-5 h-5" />
-                                            <span class="inline-block ml-2">Remove Image</span>
-                                        </button>
+                                        <form @submit.prevent="onDeleteBioImage" class="w-full mt-2 md:ml-2 md:w-1/2 md:mt-0">
+                                            <button
+                                                type="submit" class="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent shadow-sm text-sm font-medium rounded text-white bg-red-400 hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                               <simple-trash-icon class="w-5 h-5" />
+                                                <span class="inline-block ml-2">Remove Image</span>
+                                            </button>
+                                        </form>
                                     </div>
 
                                 </div>
@@ -142,6 +145,7 @@ export default {
           uploadImageModal: false,
           uploadedImage:'',
           imageSrc:'',
+          loading: false,
           form: {
               title: this.bio.title,
               bio: this.bio.description,
@@ -207,6 +211,16 @@ export default {
                 this.uploadImageModal = !this.uploadImageModal
             }
         },
+        onDeleteBioImage(){
+            if (!this.bio.image) return;
+            this.loading = true
+            axios.delete(`/api/bio/${this.bio.id}/avatar/${this.bio.image.imageable_id}`)
+            .then((response) => {
+                this.loading = false
+                this.$emitter.emit('reload')
+                this.imageSrc = false
+            })
+        }
 
     },
     mounted() {

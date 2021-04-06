@@ -89,7 +89,7 @@ export default {
             type: String,
         },
         imageSrc:{
-            type: String
+            type: [Boolean,String]
         },
         bio: {
             type: Object,
