@@ -18393,15 +18393,19 @@ __webpack_require__.r(__webpack_exports__);
         var form = new FormData();
         canvas.toBlob(function (blob) {
           form.append('avatar', blob);
-          axios.post("/api/bio/".concat(_this.bio.id, "/avatar"), form).then(function (response) {
-            _this.$emit('update:uploaded-image', response.data.path);
 
-            _this.$emit('update:upload-image-modal', !_this.uploadImageModal);
+          _this.$inertia.post(route('bio.avatar.store', {
+            bio: _this.bio.slug
+          }), form, {
+            preserveScroll: true,
+            onSuccess: function onSuccess() {
+              _this.$emit('update:upload-image-modal', !_this.uploadImageModal);
 
-            _this.$emit('update:image-src', response.data.path);
+              _this.$emit('update:image-src', "/".concat(_this.bio.image.path));
 
-            _this.$emitter.emit('reload');
-          })["catch"](function (error) {});
+              _this.$emitter.emit('reload');
+            }
+          });
         });
       }
     }
@@ -20083,12 +20087,18 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.bio.image) return;
       this.loading = true;
-      axios["delete"]("/api/bio/".concat(this.bio.id, "/avatar/").concat(this.bio.image.imageable_id)).then(function (response) {
-        _this2.loading = false;
+      this.$inertia["delete"](route('bio.avatar.delete', {
+        bio: this.bio.slug,
+        avatar: this.bio.image.imageable_id
+      }), {
+        preserveScroll: true,
+        onSuccess: function onSuccess() {
+          _this2.loading = false;
 
-        _this2.$emitter.emit('reload');
+          _this2.$emitter.emit('reload');
 
-        _this2.imageSrc = false;
+          _this2.imageSrc = false;
+        }
       });
     }
   },

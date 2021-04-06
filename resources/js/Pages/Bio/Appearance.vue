@@ -214,11 +214,16 @@ export default {
         onDeleteBioImage(){
             if (!this.bio.image) return;
             this.loading = true
-            axios.delete(`/api/bio/${this.bio.id}/avatar/${this.bio.image.imageable_id}`)
-            .then((response) => {
-                this.loading = false
-                this.$emitter.emit('reload')
-                this.imageSrc = false
+            this.$inertia.delete(route('bio.avatar.delete',{
+                bio : this.bio.slug,
+                avatar: this.bio.image.imageable_id
+            }), {
+                preserveScroll : true,
+                onSuccess: () => {
+                    this.loading = false
+                    this.$emitter.emit('reload')
+                    this.imageSrc = false
+                }
             })
         }
 

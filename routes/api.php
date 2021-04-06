@@ -22,6 +22,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('svgs', SvgsController::class);
     Route::post('link/{link}/icon', LinkIconController::class);
     Route::post('link/{link}/schedule', LinkScheduleController::class);
-    Route::post('bio/{bio}/avatar', [AvatarController::class,'update']);
-    Route::delete('bio/{bio}/avatar/{avatar}', [AvatarController::class,'destroy']);
 });

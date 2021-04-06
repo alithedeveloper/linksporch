@@ -2,6 +2,7 @@
 
 use App\Services\SvgIcons\Cleaner;
 use App\Http\Controllers\{BioAppearanceController,
+    BioAvatarController,
     BiosController,
     BioStatusController,
     BioViewController,
@@ -56,6 +57,12 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
     // Bio Status
     Route::put('/bio/{bio:slug}/status', BioStatusController::class)
         ->name('bio.status.update');
+
+    // Bio avatar
+    Route::post('/bio/{bio:slug}/avatar', [BioAvatarController::class,'store'])
+        ->name('bio.avatar.store');
+    Route::delete('/bio/{bio:slug}/avatar/{avatar}', [BioAvatarController::class,'destroy'])
+        ->name('bio.avatar.delete');
 
     // create link
     Route::post('/bio/{bio:slug}/links', [LinkController::class, 'store'])
