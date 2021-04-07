@@ -25,8 +25,6 @@ class CreateBiosTable extends Migration
             $table->string('leap_url')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_active')->default(true);
-            $table->string('text_color',60);
-            $table->string('background',60);
             $table->dateTime('scheduled_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
