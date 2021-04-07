@@ -32,9 +32,11 @@
                                                     <span class="inline-block ml-2">Pick an image</span>
                                                     <span class="sr-only"> user photo</span>
                                                 </label>
-                                                <input id="user_photo" name="user_photo" type="file"
+                                                <input id="user_photo" name="bio_image" type="file"
+                                                       ref="bioImage"
                                                        class="absolute w-full h-full opacity-0 cursor-pointer rounded"
                                                        @change="onUploadImage"
+                                                       @click="resetImageUploader"
                                                        accept="image/*"
                                                 >
                                             </div>
@@ -192,6 +194,9 @@ export default {
             // const data = JSON.stringify(presetStyler.styles)
             const data = presetStyler.styles
             this.iFrameWindow.postMessage(data, '*')
+        },
+        resetImageUploader(){
+            this.$refs.bioImage.value = '';
         },
         onUploadImage(event){
             // Reference to the DOM input element

@@ -126,6 +126,7 @@ export default {
                         form, {
                             preserveScroll: true,
                             onSuccess: () => {
+                                this.$emit('update:uploaded-image', `/${this.bio.image.path}`)
                                 this.$emit('update:upload-image-modal', !this.uploadImageModal)
                                 this.$emit('update:image-src', `/${this.bio.image.path}`)
                                 this.$emitter.emit('reload')

@@ -18399,6 +18399,8 @@ __webpack_require__.r(__webpack_exports__);
           }), form, {
             preserveScroll: true,
             onSuccess: function onSuccess() {
+              _this.$emit('update:uploaded-image', "/".concat(_this.bio.image.path));
+
               _this.$emit('update:upload-image-modal', !_this.uploadImageModal);
 
               _this.$emit('update:image-src', "/".concat(_this.bio.image.path));
@@ -20060,6 +20062,9 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = presetStyler.styles;
       this.iFrameWindow.postMessage(data, '*');
+    },
+    resetImageUploader: function resetImageUploader() {
+      this.$refs.bioImage.value = '';
     },
     onUploadImage: function onUploadImage(event) {
       var _this = this;
@@ -25872,17 +25877,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "class": "w-5 h-5"
           }), _hoisted_15, _hoisted_16]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
             id: "user_photo",
-            name: "user_photo",
+            name: "bio_image",
             type: "file",
+            ref: "bioImage",
             "class": "absolute w-full h-full opacity-0 cursor-pointer rounded",
             onChange: _cache[1] || (_cache[1] = function () {
               return $options.onUploadImage && $options.onUploadImage.apply($options, arguments);
             }),
+            onClick: _cache[2] || (_cache[2] = function () {
+              return $options.resetImageUploader && $options.resetImageUploader.apply($options, arguments);
+            }),
             accept: "image/*"
-          }, null, 32
-          /* HYDRATE_EVENTS */
+          }, null, 544
+          /* HYDRATE_EVENTS, NEED_PATCH */
           )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-            onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+            onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
               return $options.onDeleteBioImage && $options.onDeleteBioImage.apply($options, arguments);
             }, ["prevent"])),
             "class": "w-full mt-2 md:ml-2 md:w-1/2 md:mt-0"
@@ -25896,7 +25905,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             id: "title",
             autocomplete: "username",
             "class": "focus:ring-light-blue-500 focus:border-light-blue-500 flex-grow block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300",
-            "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+            "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
               return $data.form.title = $event;
             })
           }, null, 512
@@ -25905,7 +25914,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             id: "about",
             name: "about",
             rows: "5",
-            "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+            "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
               return $data.form.bio = $event;
             }),
             "class": "shadow-sm focus:ring-light-blue-500 focus:border-light-blue-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -25913,15 +25922,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* NEED_PATCH */
           ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.bio]])]), _hoisted_24])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_upload_image_modal, {
             "upload-image-modal": $data.uploadImageModal,
-            "onUpdate:upload-image-modal": _cache[5] || (_cache[5] = function ($event) {
+            "onUpdate:upload-image-modal": _cache[6] || (_cache[6] = function ($event) {
               return $data.uploadImageModal = $event;
             }),
             "uploaded-image": $data.uploadedImage,
-            "onUpdate:uploaded-image": _cache[6] || (_cache[6] = function ($event) {
+            "onUpdate:uploaded-image": _cache[7] || (_cache[7] = function ($event) {
               return $data.uploadedImage = $event;
             }),
             "image-src": $data.imageSrc,
-            "onUpdate:image-src": _cache[7] || (_cache[7] = function ($event) {
+            "onUpdate:image-src": _cache[8] || (_cache[8] = function ($event) {
               return $data.imageSrc = $event;
             }),
             bio: $props.bio
@@ -25929,7 +25938,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["upload-image-modal", "uploaded-image", "image-src", "bio"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("/Bio"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[8] || (_cache[8] = function ($event) {
+            onClick: _cache[9] || (_cache[9] = function ($event) {
               return $options.onClickPreset('pink');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
@@ -25939,7 +25948,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[9] || (_cache[9] = function ($event) {
+            onClick: _cache[10] || (_cache[10] = function ($event) {
               return $options.onClickPreset('blue');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
@@ -25949,7 +25958,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           /* PROPS */
           , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
             "class": "col-span-4",
-            onClick: _cache[10] || (_cache[10] = function ($event) {
+            onClick: _cache[11] || (_cache[11] = function ($event) {
               return $options.onClickPreset('green');
             })
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
