@@ -3,10 +3,13 @@
         class="min-h-screen"
         :style="`background:${styles.background}`"
     >
-        <div class="grid grid-col-6">
+        <div class="max-w-3xl mx-auto">
             <div class="flex flex-col items-center pt-16">
             <span class="inline-block h20 w-20 rounded-full overflow-hidden bg-gray-100">
-              <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+              <img v-if="bio.image" :src="`/${bio.image.path}`" alt="">
+              <svg
+                  v-if="!bio.image || !bio.image.path"
+                  class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
                 <path
                     d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/>
               </svg>
@@ -18,13 +21,19 @@
             <div class="flex flex-col">
                 <a v-for="(link,index) in bio.links" :key="index"
                    :href="link.url"
-                   v-show="link.title"
+                   v-show="link.title && link.is_active"
                    class="border-2 border-green-100 p-2 mb-5 rounded mx-5
-                       text-center shadow-sm bg-green-200"
+                       text-center shadow-sm bg-green-200 flex items-center justify-center"
                    :style="`background:${styles.linkColor}; color:${styles.linkTextColor}`"
-                >{{ link.title }}</a>
-
-
+                >
+                   <template v-if="link.svg && link.svg.markup.length">
+                       <inline-svg
+                           :markup="link.svg.markup"
+                           :removeAttributes=true
+                           classes="w-6 h-6 mr-2"
+                       />
+                   </template> <p>{{ link.title }}</p>
+                </a>
             </div>
         </div>
 
@@ -33,9 +42,10 @@
 </template>
 
 <script>
+import InlineSvg from "../../Components/InlineSvg";
 export default {
     name: "View",
-    components: {},
+    components: { InlineSvg },
     props: ['user', 'bio'],
     data() {
         return {
@@ -50,11 +60,9 @@ export default {
     },
     mounted() {
         window.addEventListener('message', (e) => {
-            console.log(e.data)
             let messageData = e.data
             if (e.origin === 'http://localhost') {
                 this.styles = messageData
-                console.log(messageData)
             }
         });
 

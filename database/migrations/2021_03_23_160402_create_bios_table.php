@@ -20,12 +20,14 @@ class CreateBiosTable extends Migration
             $table->string('slug')->index();
             $table->text('description')->nullable();
             $table->string('url');
+            $table->string('custom_domain_url')->nullable();
             $table->boolean('is_public')->default(true);
             $table->string('leap_url')->nullable();
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_active')->default(true);
             $table->string('text_color',60);
             $table->string('background',60);
+            $table->dateTime('scheduled_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

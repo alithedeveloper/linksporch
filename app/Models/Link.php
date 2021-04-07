@@ -31,4 +31,9 @@ class Link extends Model
     {
         return $this->belongsTo(LinkType::class);
     }
+
+    public function svg(): BelongsTo
+    {
+        return $this->belongsTo(Svg::class);
+    }
 }

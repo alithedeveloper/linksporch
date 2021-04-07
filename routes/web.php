@@ -1,17 +1,21 @@
 <?php
 
-use App\Http\Controllers\{BiosController,
+use App\Services\SvgIcons\Cleaner;
+use App\Http\Controllers\{BioAppearanceController,
+    BioAvatarController,
+    BiosController,
     BioStatusController,
     BioViewController,
     DashboardController,
     LinkController,
     LinksController,
     LinkStatusController,
-    LinkTitleUrlController
-};
+    LinkTitleUrlController};
+use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,22 +37,38 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/{user:username}/{bio:slug}', BioViewController::class)
-    ->name('bio.view');
+//Route::get('/{user:username}/{bio:slug}', BioViewController::class)
+//    ->name('bio.view');
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
+
+    Route::get('/', DashboardController::class)
+        ->name('dashboard');
+
+    // Create Bio
+    Route::post('/bios', [BiosController::class, 'store'])
+        ->name('bio.store');
 
     // Show Bio
     Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
         ->name('bio.show');
 
-    Route::get('/bios/{bio:slug}/appearance', \App\Http\Controllers\BioAppearanceController::class)
+    //Preview Bio
+    Route::get('/{user:username}/{bio:slug}/preview', BioViewController::class)
+        ->name('bio.view');
+
+    Route::get('/bios/{bio:slug}/appearance', BioAppearanceController::class)
         ->name('bio.appearance');
 
     // Bio Status
     Route::put('/bio/{bio:slug}/status', BioStatusController::class)
         ->name('bio.status.update');
+
+    // Bio avatar
+    Route::post('/bio/{bio:slug}/avatar', [BioAvatarController::class,'store'])
+        ->name('bio.avatar.store');
+    Route::delete('/bio/{bio:slug}/avatar/{avatar}', [BioAvatarController::class,'destroy'])
+        ->name('bio.avatar.delete');
 
     // create link
     Route::post('/bio/{bio:slug}/links', [LinkController::class, 'store'])
