@@ -16,7 +16,7 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request): Response
     {
-        $bios = Bio::where('user_id', $request->user()->id)->get();
+        $bios = Bio::where('user_id', $request->user()->id)->latest()->get();
 
         return Inertia::render('Dashboard', [
             'bios' => $bios

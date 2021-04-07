@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bio;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,12 +14,11 @@ class LinkController extends Controller
         $bio->links()->create([
            'link_type_id' => 1,
             'title' => '',
-            'description' => '',
-            'icon' => '',
             'url'  => '',
             'is_active' => false,
-            'text_color' => '#3456787',
-            'background_color' => '#345678'
+            'schedule'  => Carbon::now()->toDateTimeString(),
+            'created_at' => Carbon::now()->toDateTimeString(),
+            'updated_at' => Carbon::now()->toDateTimeString(),
         ]);
 
         return Redirect::route('bio.show', [$bio->slug]);

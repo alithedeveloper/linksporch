@@ -41,7 +41,13 @@ Route::get('/', function () {
 //    ->name('bio.view');
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
+
+    Route::get('/', DashboardController::class)
+        ->name('dashboard');
+
+    // Create Bio
+    Route::post('/bios', [BiosController::class, 'store'])
+        ->name('bio.store');
 
     // Show Bio
     Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
