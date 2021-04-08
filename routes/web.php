@@ -53,6 +53,14 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
     Route::get('/bios/{bio:slug}', [BiosController::class, 'show'])
         ->name('bio.show');
 
+    // Update Bio
+    Route::put('/bios/{bio:slug}', [BiosController::class, 'update'])
+        ->name('bio.update');
+
+    // Delete Bio
+    Route::delete('/bios/{bio:slug}', [BiosController::class, 'destroy'])
+        ->name('bio.delete');
+
     //Preview Bio
     Route::get('/{user:username}/{bio:slug}/preview', BioViewController::class)
         ->name('bio.view');

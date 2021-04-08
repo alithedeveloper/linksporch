@@ -26,8 +26,6 @@ class BiosTableSeeder extends Seeder
                 'description' => 'You can follow me on social media',
                 'url'         => 'https://ali.shah',
                 'is_public'   => true,
-                'text_color'  => '#ececece',
-                'background'  => '#e2c2c3'
             ],
             [
                 'user_id'     => 1,
@@ -36,8 +34,6 @@ class BiosTableSeeder extends Seeder
                 'description' => 'You can follow me on social media',
                 'url'         => 'https://gmail.com',
                 'is_public'   => true,
-                'text_color'  => '#ececece',
-                'background'  => '#e2c2c3'
             ]
         ];
     }

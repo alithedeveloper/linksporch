@@ -22950,11 +22950,11 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_4 = {
-  "class": "inline-block mx-5 relative align-bottom w-full bg-white rounded-md text-left overflow-y-auto shadow-xl transform transition-all\n                           sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6"
+  "class": "inline-block mx-5 relative align-bottom w-full bg-white rounded-md text-left overflow-y-auto shadow-xl transform transition-all\n                           sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full"
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "bg-blue px-5 py-3 uppercase text-blue-100 text-sm font-semibold tracking-wider"
+  "class": "bg-blue px-5 py-3 uppercase text-blue-100 text-sm font-semibold tracking-wider sm:px-5 sm:py-3"
 }, " Create new profile ", -1
 /* HOISTED */
 );

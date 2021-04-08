@@ -30,6 +30,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
+        "@babel/preset-react": "^7.13.13",
         "@tailwindcss/jit": "^0.1.9",
         "moment": "^2.29.1",
         "vue-advanced-cropper": "^2.2.1",

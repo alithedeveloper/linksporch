@@ -17,22 +17,15 @@ class BiosController extends Controller
      */
     public function show(Bio $bio)
     {
-        $bio->load(['links' => function($query){
-            $query->latest();
-        }]);
+        $bio->load([
+            'links' => function ($query) {
+                $query->latest();
+            }
+        ]);
 
         return Inertia::render('Bio/Show', [
             'bio' => $bio
         ]);
-    }
-
-    /**
-     * @param  Bio  $bio
-     * @param  Request  $request
-     */
-    public function update(Bio $bio, Request $request)
-    {
-
     }
 
     /**
@@ -41,27 +34,63 @@ class BiosController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            'title' => 'required',
-            'slug'  => 'required'
-        ]);
+        $this->validate($request,
+            [
+                'title' => 'required',
+                'slug'  => 'required'
+            ],
+            [
+                'title.required' => 'Title is required for your bio',
+                'slug.required'  => 'Url is required for your bio',
+            ]
+        );
 
         Auth::user()->bios()->create([
-            'title' => $request->input('title'),
-            'slug'  =>  $request->input('slug'),
-            'url'   => bio_url(
+            'title'        => $request->input('title'),
+            'slug'         => $request->input('slug'),
+            'url'          => bio_url(
                 $request->user()->username,
                 $request->input('slug')
             ),
-            'is_public' => false,
-            'is_active' => false,
+            'is_public'    => false,
+            'is_active'    => false,
             'scheduled_at' => Carbon::now()->toDateTimeString()
         ]);
 
         return Redirect::route('bio.appearance', [
             $request->input('slug')
         ]);
+    }
+
+    public function update(Bio $bio, Request $request)
+    {
+        $this->validate($request,
+            [
+                'title' => 'required',
+                'slug'  => 'required'
+            ],
+            [
+                'title.required' => 'Title is required for your bio',
+                'slug.required'  => 'Slug is required for your bio',
+            ]
+        );
+
+        $bio->forceFill([
+            'title'       => $request->input('title'),
+            'slug'        => $request->input('slug'),
+            'description' => $request->input('bio')
+        ])->save();
+
+        $bio->refresh();
+
+        return Redirect::route('bio.appearance', [$bio->slug]);
+    }
+
+    public function destroy(Bio $bio)
+    {
+       $bio->delete();
+
+       return Redirect::route('dashboard');
     }
 
 }

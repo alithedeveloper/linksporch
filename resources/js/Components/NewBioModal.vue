@@ -31,14 +31,15 @@
             >
                 <div
                     v-click-outside="onClickOutside"
-                    class="inline-block mx-5 relative align-bottom w-full bg-white rounded-md text-left overflow-y-auto shadow-xl transform transition-all
-                           sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full sm:p-6">
-                    <div class="bg-blue px-5 py-3 uppercase text-blue-100 text-sm font-semibold tracking-wider">
+                    class="inline-block mx-5 relative align-bottom w-full bg-white rounded-lg text-left overflow-y-auto shadow-xl transform transition-all
+                           sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+                    <div
+                        class="bg-green px-5 py-3 sm:px-8 uppercase text-green-50 text-sm font-semibold tracking-wider sm:px-5 sm:py-3">
                         Create new profile
                     </div>
 
-                    <form class="p-5" @submit.prevent="onFormSubmit">
-                        <div>
+                    <form class="p-5 sm:px-8" @submit.prevent="onFormSubmit">
+                        <div class="relative">
                             <label for="title" class="block text-sm font-medium text-gray-700">
                                 Title
                             </label>
@@ -47,44 +48,54 @@
                                     v-model="form.title"
                                     type="text" name="title" id="title"
                                     class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full
-                                    sm:text-sm text-gray-700 border-gray-300 rounded-md">
+                                    sm:text-sm text-gray-700 rounded-md"
+                                    :class="bioErrors.title ? 'border-red-500':'border-gray-300'"
+                                >
                             </div>
+                            <p
+                                v-if="bioErrors.title"
+                                class="mt-0.5 ml-0.5 text-red-500"
+                                >{{ bioErrors.title }}</p>
                         </div>
-                        <div class="mt-6 sm:mt-5 sm:space-y-5">
-                            <div
-                                class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5">
-                                <label for="url" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                                    Url
-                                </label>
-                                <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                    <div class="max-w-lg flex rounded-md shadow-sm">
+                        <div
+                            class="w-full mt-5">
+                            <label for="slug" class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+                                Url
+                            </label>
+                            <div class="mt-1">
+                                <div class="flex rounded-md shadow-sm">
                                       <span
-                                          class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-green bg-green text-white sm:text-sm">
+                                          class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-blue bg-blue text-white sm:text-sm">
                                         linkspor.ch/{{ username }}/
                                       </span>
-                                        <input
-                                            v-model="form.slug"
-                                            type="text" name="slug" id="slug"
-                                            class="flex-1 block w-full focus:ring-green focus:border-green min-w-0
-                                            rounded-none rounded-r-md sm:text-sm text-gray-500 border-green">
-                                    </div>
+                                    <input
+                                        v-model="form.slug"
+                                        type="text" name="slug" id="slug"
+                                        class="flex-1 block w-full focus:ring-blue focus:border-green min-w-0
+                                            rounded-none rounded-r-md sm:text-sm text-gray-500 "
+                                        :class="bioErrors.slug ? 'border-red-500':'border-green'"
+                                    >
                                 </div>
+                                <p
+                                    v-if="bioErrors.slug"
+                                    class="mt-0.5 ml-0.5 text-red-500"
+                                >{{ bioErrors.slug }}</p>
                             </div>
-
                         </div>
-                        <div class="flex items-center mt-5">
-                            <button
-                                class="w-1/2 text-center uppercase tracking-wider relative px-8 py-2.5 border-2 border-indigo-600 text-sm
-                                font-medium rounded text-indigo-50 focus:outline-none focus:ring-1 bg-indigo-700 hover:bg-indigo-600
-                                focus:ring-indigo-800 focus:border-indigo-800"
-                            >Create
-                            </button>
+
+                        <div class="flex items-center mt-8">
                             <button
                                 @click="onCancelBtnClick"
-                                class="w-1/2 text-center ml-5 uppercase tracking-wider relative px-8 py-2.5 border-2 border-indigo-600 text-sm
-                                font-medium rounded text-indigo-50 focus:outline-none focus:ring-1 bg-indigo-700 hover:bg-indigo-600
-                                focus:ring-indigo-800 focus:border-indigo-800"
+                                class="w-1/2 text-center uppercase tracking-wider relative px-8 py-2.5 border-2 border-blue text-sm
+                                font-medium rounded text-indigo-50 focus:outline-none focus:ring-2 bg-blue hover:bg-blue
+                                focus:ring-blue focus:border-blue"
                             >Cancel
+                            </button>
+                            <button
+                                class="w-1/2 text-center ml-5 uppercase tracking-wider relative px-8 py-2.5 border-2 border-green text-sm
+                                font-medium rounded text-green-50 focus:outline-none focus:ring-2 bg-green focus:ring-green-dark
+                                focus:border-green-dark"
+                            >Create
                             </button>
                         </div>
                     </form>
@@ -107,11 +118,11 @@ export default {
             type: Boolean,
             default: false
         }
-
     },
     data() {
         return {
             loading: false,
+            bioErrors: {},
             form: this.$inertia.form({
                 title: '',
                 slug: ''
@@ -121,6 +132,7 @@ export default {
     watch: {
         'form.title'(newValue) {
             this.form.slug = newValue.slugify('-')
+            if (newValue.length) this.bioErrors = {}
         }
     },
     computed: {
@@ -139,14 +151,19 @@ export default {
             }
         },
         onFormSubmit() {
-            this.form.post(route('bio.store'),{
+            this.form.post(route('bio.store'), {
                 onSuccess: () => {
-
+                    this.$emitter.emit('notify',{
+                        type: 'success',
+                        title: 'New profile is being created successfully'
+                    })
                 },
-                onError: () => {}
+                onError: (errors) => {
+                    this.bioErrors = errors
+                }
             })
         }
-    },
+    }
 
 }
 </script>

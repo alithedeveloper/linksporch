@@ -53,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class=" space-y-6 mt-10">
+                        <form class="space-y-6 mt-10" @submit.prevent="onSubmitForm">
                             <div>
                                 <label for="title" class="block text-sm font-medium text-gray-700 sr-only">
                                     Profile Title
@@ -61,9 +61,29 @@
                                 <div class="mt-1 rounded-md shadow-sm flex">
                                     <input type="text" name="title" id="title"
                                            autocomplete="username"
-                                           class="focus:ring-light-blue-500 focus:border-light-blue-500 flex-grow block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300"
+                                           class="focus:ring-light-blue-500 focus:border-light-blue-500 flex-grow block w-full min-w-0 rounded sm:text-sm"
+                                           :class="bioUpdateErrors.title ? 'border-red-500':'border-gray-300'"
                                            v-model="form.title">
                                 </div>
+                                <p
+                                    v-if="bioUpdateErrors.title"
+                                    class="mt-0.5 ml-0.5 text-red-500">{{ bioUpdateErrors.title }}</p>
+                            </div>
+
+                            <div>
+                                <label for="slug" class="block text-sm font-medium text-gray-700 sr-only">
+                                    Profile Slug
+                                </label>
+                                <div class="mt-1 rounded-md shadow-sm flex">
+                                    <input type="text" name="slug" id="slug"
+                                           autocomplete="username"
+                                           class="focus:ring-light-blue-500 focus:border-light-blue-500 flex-grow block w-full min-w-0 rounded sm:text-sm"
+                                           :class="bioUpdateErrors.slug ? 'border-red-500':'border-gray-300'"
+                                           v-model="form.slug">
+                                </div>
+                                <p
+                                    v-if="bioUpdateErrors.slug"
+                                    class="mt-0.5 ml-0.5 text-red-500">{{ bioUpdateErrors.slug }}</p>
                             </div>
 
                             <div>
@@ -73,15 +93,50 @@
                                 <div class="mt-1">
                                     <textarea id="about" name="about" rows="5"
                                               v-model="form.bio"
+                                              placeholder="your bio description ...."
                                               class="shadow-sm focus:ring-light-blue-500 focus:border-light-blue-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"></textarea>
                                 </div>
                                 <p class="mt-2 text-sm text-gray-500 sr-only">
                                     Brief description for your profile. URLs are hyperlinked.
                                 </p>
                             </div>
-                        </div>
+
+                            <div class="flex justify-end">
+
+                                <button
+                                    @click="onClickDeleteBio"
+                                    class="text-center uppercase tracking-wider relative px-10 py-2.5 border-2 border-red-500 text-sm
+                                font-medium rounded text-red-500 focus:outline-none hover:bg-red-500 hover:text-red-50 mr-5"
+                                >Delete</button>
+
+                                <button
+                                    class="text-center uppercase tracking-wider relative px-10 py-2.5 border-2 border-green text-sm
+                                font-medium rounded text-green-50 focus:outline-none focus:ring-2 bg-green focus:ring-green-dark
+                                focus:border-green-dark"
+                                >Update</button>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
+                <confirmation-modal :show="deleteConfirmationModel">
+                    <template v-slot:title>
+                        Delete Bio
+                    </template>
+                    <template v-slot:content>
+                        Are you sure you want to delete this profile ?
+                    </template>
+                    <template v-slot:footer>
+                        <jet-button
+                            @click="onConfirmationCancelBtn"
+                            class="bg-blue py-2.5 px-5 mr-5"
+                        >Never mind</jet-button>
+                        <jet-button
+                            @click="onConfirmationDeleteBtn"
+                            class="bg-red-500 py-2.5 px-5"
+                        >Delete</jet-button>
+                    </template>
+                </confirmation-modal>
                 <upload-image-modal
                     v-model:upload-image-modal="uploadImageModal"
                     v-model:uploaded-image="uploadedImage"
@@ -118,14 +173,18 @@ import AppLayout from "@/Layouts/AppLayout";
 import BioLayout from "@/Layouts/BioLayout"
 import ButtonInput from "@/Components/Input/ButtonInput";
 import PresetStyler from "@/Utils/PresetStyler";
-import UploadSimpleIcon from "../../Components/Icons/UploadSimpleIcon";
-import SimpleTrashIcon from "../../Components/Icons/SimpleTrashIcon";
-import UploadImageModal from "../../Components/Modals/UploadImageModal";
-import ProfileIcon from "../../Components/Icons/ProfileIcon";
+import UploadSimpleIcon from "@/Components/Icons/UploadSimpleIcon";
+import SimpleTrashIcon from "@/Components/Icons/SimpleTrashIcon";
+import UploadImageModal from "@/Components/Modals/UploadImageModal";
+import ProfileIcon from "@/Components/Icons/ProfileIcon";
+import ConfirmationModal from "../../Jetstream/ConfirmationModal";
+import JetButton from "../../Jetstream/Button";
 
 export default {
     name: "Appearance",
     components: {
+        JetButton,
+        ConfirmationModal,
         ProfileIcon,
         SimpleTrashIcon,
         UploadSimpleIcon,
@@ -148,15 +207,22 @@ export default {
           uploadedImage:'',
           imageSrc:'',
           loading: false,
-          form: {
+          bioUpdateErrors: {},
+          deleteConfirmationModel: false,
+          form: this.$inertia.form({
               title: this.bio.title,
+              slug: this.bio.slug,
               bio: this.bio.description,
-          }
+          })
       }
     },
     watch:{
         uploadImageModal(newValue){
             this.$emitter.emit('modal-activation', { show: newValue})
+        },
+        'form.title'(newValue){
+            if (newValue.length) this.form.slug = newValue.slugify('-')
+            if (Object.keys(this.bioUpdateErrors).length) this.bioUpdateErrors = {}
         }
     },
     computed: {
@@ -228,6 +294,33 @@ export default {
                     this.loading = false
                     this.$emitter.emit('reload')
                     this.imageSrc = false
+                }
+            })
+        },
+        onSubmitForm(){
+            this.form.put(route('bio.update', this.bio.slug),{
+                preserveScroll : true,
+                onSuccess: () => {
+                    this.loading = false
+                },
+                onError: (errors) => {
+                    this.bioUpdateErrors = errors
+                }
+            })
+        },
+        onClickDeleteBio(){
+            this.deleteConfirmationModel = !this.deleteConfirmationModel
+        },
+        onConfirmationCancelBtn(){
+            this.deleteConfirmationModel = !this.deleteConfirmationModel
+        },
+        onConfirmationDeleteBtn(){
+            this.$inertia.delete(route('bio.delete', { bio: this.bio.slug}),{
+                onSuccess: () => {
+                    this.$emitter.emit('notify',{
+                        type: 'success',
+                        title: 'Profile is being deleted successfully'
+                    })
                 }
             })
         }

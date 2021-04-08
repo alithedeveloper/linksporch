@@ -43,6 +43,7 @@
                     </div>
                     <new-bio-modal
                         v-model:show-create-bio-modal="showCreateBioModal"
+                        :errors="errors"
                     />
 
                 </main>
@@ -68,7 +69,10 @@ export default {
         NewBioModal,
     },
     props: {
-        bios: Object
+        bios: Object,
+        errors:{
+            type: Object
+        }
     },
     data(){
         return{
