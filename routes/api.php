@@ -20,6 +20,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('svgs', SvgsController::class);
-    Route::post('link/{link}/icon', LinkIconController::class);
     Route::post('link/{link}/schedule', LinkScheduleController::class);
 });

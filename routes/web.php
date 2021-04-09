@@ -1,6 +1,5 @@
 <?php
 
-use App\Services\SvgIcons\Cleaner;
 use App\Http\Controllers\{BioAppearanceController,
     BioAvatarController,
     BiosController,
@@ -8,14 +7,13 @@ use App\Http\Controllers\{BioAppearanceController,
     BioViewController,
     DashboardController,
     LinkController,
+    LinkIconController,
     LinksController,
     LinkStatusController,
     LinkTitleUrlController};
-use enshrined\svgSanitize\Sanitizer;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,9 +71,9 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
         ->name('bio.status.update');
 
     // Bio avatar
-    Route::post('/bio/{bio:slug}/avatar', [BioAvatarController::class,'store'])
+    Route::post('/bio/{bio:slug}/avatar', [BioAvatarController::class, 'store'])
         ->name('bio.avatar.store');
-    Route::delete('/bio/{bio:slug}/avatar/{avatar}', [BioAvatarController::class,'destroy'])
+    Route::delete('/bio/{bio:slug}/avatar/{avatar}', [BioAvatarController::class, 'destroy'])
         ->name('bio.avatar.delete');
 
     // create link
@@ -95,6 +93,9 @@ Route::middleware(['auth:sanctum', 'verified'])->prefix('dashboard')->group(func
     //Link Title & Url
     Route::put('/links/{link}/title-url', LinkTitleUrlController::class)
         ->name('link.title.url.update')->middleware('remember');
+
+    Route::post('link/{link}/icon', LinkIconController::class)
+        ->name('link.icon.update');
 
 
 });

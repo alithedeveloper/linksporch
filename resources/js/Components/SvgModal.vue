@@ -37,7 +37,7 @@
                             Icon</label>
                         <div class="mt-1 rounded-md shadow-sm">
                             <p v-if="svgSearchError.length > 0"
-                               class="text-red-600 text-sm">{{ svgSearchError}}</p>
+                               class="text-red-600 text-sm">{{ svgSearchError }}</p>
                             <div class="flex">
                                 <div class="relative flex items-stretch flex-grow focus-within:z-10">
                                     <input type="text" name="search" id="search"
@@ -127,7 +127,7 @@ export default {
             this.svgIcon = this.svgs.find(svg => svg.name.toLowerCase() === this.form.searchTerm.toLowerCase())
             return typeof this.svgIcon !== 'undefined'
         },
-        disabledBtn(){
+        disabledBtn() {
             return this.form.searchTerm.length === 0 ||
                 this.svgSearchError.length > 0
         }
@@ -136,14 +136,14 @@ export default {
         onClickSvgIcon(svg) {
             this.form.searchTerm = svg.name
         },
-        onSvgSearchInput(){
-          this.svgSearchError = ''
+        onSvgSearchInput() {
+            this.svgSearchError = ''
         },
-        onClickOutside(){
+        onClickOutside() {
             const notification = this.$root.$el.querySelector('.notification')
-            if (this.showIcons === true && notification === null){
+            if (this.showIcons === true && notification === null) {
                 this.$emit('update:showIcons', !this.showIcons)
-                this.$emitter.emit('modal-activation', { show: !this.showIcons})
+                this.$emitter.emit('modal-activation', {show: !this.showIcons})
             }
         },
         onFormSubmit() {
@@ -157,17 +157,17 @@ export default {
                 return false;
             }
 
-            this.loading = true
-            axios.post(`/api/link/${this.link.id}/icon`, this.form)
-                .then((response) => {
+            this.$inertia.post(route('link.icon.update', {link: this.link.id}), this.form, {
+                onStart: () => {
+                    this.loading = true
+                },
+                onSuccess: () => {
                     this.loading = false
                     this.$emit('update:showIcons', !this.showIcons)
                     this.$emit('update:svgIcon', this.svgIcon)
                     this.$emitter.emit('reload')
-                })
-                .catch((error) => {
-                    this.loading = false
-                })
+                }
+            })
         },
     },
 }
