@@ -1,5 +1,5 @@
 <template>
-    <li class="relative border border-gray-200 mb-5 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+    <li class="relative border border-gray-200 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
         <div class="flex items-center justify-between">
             <!-- Repo name and link -->
             <div class="min-w-0">
@@ -45,7 +45,7 @@
             <div class="flex-col items-end flex-shrink-0 hidden sm:flex">
                 <div class="flex items-center space-x-3">
                     <span
-
+                        @click="showEditForm=!showEditForm"
                         class="flex items-center justify-center text-gray-300 hover:text-gray-400 cursor-pointer">
                         <span class="mr-5 text-gray-600">Edit Porch</span>
                         <cog-icon class="w-6 h-6" />
@@ -61,6 +61,7 @@
             </div>
         </div>
     </li>
+    <edit-porch-modal v-model:show="showEditForm" :bio="bio"/>
 </template>
 
 <script>
@@ -73,6 +74,7 @@ import TrashIcon from "./Icons/TrashIcon";
 import TrashSolidIcon from "./Icons/TrashSolidIcon";
 import CogIcon from "./Icons/CogIcon";
 import RightArrowCircleIcon from "./Icons/RightArrowCircleIcon";
+import EditPorchModal from "./Modals/EditPorchModal";
 
 export default {
     name: "BioItem",
@@ -80,6 +82,7 @@ export default {
         bio: Object
     },
     components: {
+        EditPorchModal,
         RightArrowCircleIcon,
         CogIcon,
         TrashSolidIcon,
@@ -92,6 +95,7 @@ export default {
     },
     data() {
         return {
+            showEditForm: false,
             form: this.$inertia.form({
                 is_active: this.bio.is_active
             })
@@ -107,11 +111,11 @@ export default {
             })
         },
         onClickDeletePorch(bio){
-            this.$inertia.delete(route('bio.delete', { bio: bio.slug}),{
+            this.$inertia.delete(route('bio.delete', { bio: bio.slug }),{
                 onSuccess: () => {
                     this.$emitter.emit('notify',{
                         type: 'success',
-                        title: 'Profile is being deleted successfully'
+                        title: 'Porch is being deleted successfully'
                     })
                 }
             })

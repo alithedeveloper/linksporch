@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8">
-            <div class="grid grid-cols-9 gap-4 min-w-0 mt-4">
+            <div class="grid grid-cols-12 gap-5 min-w-0 mt-4">
                 <!-- Profile -->
-                <div class="col-span-4 flex items-center p-6 rounded shadow bg-white">
+                <div class="col-span-5 flex items-center p-6 rounded shadow bg-white">
                     <img class="hidden h-24 w-24 rounded-full sm:block" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixqx=egjrLdcwJo&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="">
                     <div>
                         <div class="flex items-center">
@@ -24,6 +24,8 @@
                         </dl>
                     </div>
                 </div>
+                <div class="col-span-3 bg-green">Hwello</div>
+                <div class="col-span-4 bg-blue">Ok</div>
             </div>
         </div>
     </div>

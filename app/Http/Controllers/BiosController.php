@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class BiosController extends Controller
@@ -66,8 +67,14 @@ class BiosController extends Controller
     {
         $this->validate($request,
             [
-                'title' => 'required',
-                'slug'  => 'required'
+                'title' => [
+                    'required',
+                    Rule::unique('bios')->where('user_id', auth()->user()->id)->whereNot('id', $bio->id)
+                ],
+                'slug'  => [
+                    'required',
+                    Rule::unique('bios')->where('user_id', auth()->user()->id)->whereNot('id', $bio->id)
+                ]
             ],
             [
                 'title.required' => 'Title is required for your bio',
@@ -78,7 +85,8 @@ class BiosController extends Controller
         $bio->forceFill([
             'title'       => $request->input('title'),
             'slug'        => $request->input('slug'),
-            'description' => $request->input('bio')
+            'description' => $request->input('bio'),
+            'leap_url'    => $request->has('leapUrl') ? $request->input('leapUrl') : null
         ])->save();
 
         $bio->refresh();

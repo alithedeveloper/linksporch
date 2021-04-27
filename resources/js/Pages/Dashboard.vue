@@ -36,7 +36,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul class="relative z-0 bg-white mt-5 p-5">
+                            <ul class="relative z-0 bg-white mt-5 p-5 space-y-5">
                                <bio-item v-for="bio in bios" :bio="bio" :key="bio.id"/>
                             </ul>
                         </div>
