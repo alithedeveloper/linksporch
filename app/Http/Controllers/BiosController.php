@@ -88,6 +88,7 @@ class BiosController extends Controller
 
     public function destroy(Bio $bio)
     {
+       $bio->links->each->delete();
        $bio->delete();
 
        return Redirect::route('dashboard');

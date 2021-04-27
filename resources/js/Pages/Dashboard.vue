@@ -15,28 +15,28 @@
                     <div class="mt-8 space-y-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                         <dashboard-stats/>
                         <!-- Projects List -->
-                        <div class="bg-white lg:min-w-0">
+                        <div class="lg:min-w-0">
                             <div
-                                class="pl-4 pr-6 pt-4 pb-4 border-b border-t border-gray-200 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6 xl:border-t-0">
+                                class="pl-4 pr-6 pt-4 pb-4 sm:pl-6 lg:pl-8 xl:pl-6 xl:pt-6">
                                 <div class="flex items-center">
-                                    <h1 class="flex-1 text-lg font-medium">Your Bios</h1>
+                                    <h1 class="flex-1 text-lg font-medium">Your Current Porchs</h1>
                                     <div class="relative">
                                         <button
                                                 @click="onClickAddNewBio"
                                                 type="button"
-                                                class="w-full flex items-center bg-white border border-blue-light rounded-md shadow-sm px-4 py-2
-                                                bg-blue inline-flex justify-center text-sm font-medium text-blue-50 hover:bg-blue-dark
-                                                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-dark"
+                                                class="w-full flex items-center bg-white border-2 border-green rounded-md shadow-sm p-4
+                                                bg-green inline-flex justify-center text-sm font-medium text-blue-50 hover:bg-white
+                                                hover:text-green focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green"
                                         >
                                             <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                        <span class="inline-block ml-2">Create a new bio</span>
+                                        <span class="inline-block ml-2">Create new Porch</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <ul class="relative z-0 divide-y divide-gray-200 border-b border-gray-200">
+                            <ul class="relative z-0 bg-white mt-5 p-5">
                                <bio-item v-for="bio in bios" :bio="bio" :key="bio.id"/>
                             </ul>
                         </div>

@@ -31,8 +31,11 @@
     },
     "dependencies": {
         "@babel/preset-react": "^7.13.13",
+        "@headlessui/vue": "^1.1.0",
         "@tailwindcss/jit": "^0.1.9",
+        "filerobot-image-editor": "^3.12.17",
         "moment": "^2.29.1",
+        "tui-image-editor": "^3.14.3",
         "vue-advanced-cropper": "^2.2.1",
         "vue-datetime": "^1.0.0-beta.14",
         "vue-flatpickr-component": "^9.0.3",
