@@ -15,7 +15,7 @@
                 <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
                      tabindex="0"
                      aria-hidden="true"
-                     @keydown.esc="$emit('update:showIcons', !showIcons)"></div>
+                     @keydown.esc="$emit('update:showIcons', !show)"></div>
             </transition>
 
             <!-- This element is to trick the browser into centering the modal contents. -->
@@ -31,27 +31,17 @@
             >
                 <div
                     v-click-outside="onClickOutside"
-                    class="inline-block mx-5 relative align-bottom w-full bg-white rounded text-left overflow-y-auto shadow-xl transform transition-all
-                           sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+                    class="inline-block  relative align-bottom w-full bg-white rounded text-left overflow-y-auto shadow-xl
+                    transform transition-all sm:align-middle sm:max-w-xl sm:w-full">
                     <header
-                        class="flex items-center justify-between bg-gray-100 px-5 py-4 sm:px-8 sm:px-5 sm:py-3">
+                        class="flex items-center justify-between bg-gray-100 bg-blue px-3 py-2">
                         <div class="flex items-center">
-                            <span class="inline-block w-3 h-3 bg-red-600 rounded-full"></span>
-                            <span class="inline-block w-3 h-3 ml-1.5 bg-green rounded-full"></span>
-                            <span class="inline-block w-3 h-3 ml-1.5 bg-blue rounded-full"></span>
+                            <logo-icon class="w-5 h5 text-blue"/>
+                            <span class="text-blue-50 pl-2">Edit your porch</span>
                         </div>
-                        <div class="flex items-center">
-                            <div class="w-10 h-6 bg-gray-300 rounded flex items-center justify-center text-gray-50">
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/>
-                                </svg>
-                            </div>
-                            <div class="w-10 h-6 bg-gray-300 rounded flex items-center justify-center text-gray-50 ml-1">
-                                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
-                                </svg>
-                            </div>
-                        </div>
+                        <a href="#" class="text-blue-50" @click.prevent="onCancelBtnClick">
+                            <times-icon class="w-5 h-5 text-blue-50"/>
+                        </a>
                     </header>
 
                     <form class="p-5 sm:px-8" @submit.prevent="onFormSubmit">
@@ -103,22 +93,6 @@
                             </div>
                         </div>
 
-                        <div class="relative mt-5">
-                            <label for="leapUrl" class="pl-1 block text-xs font-medium text-gray-400">
-                                Redirect user to a custom domain
-                            </label>
-                            <div class="mt-2">
-                                <input
-                                    v-model="form.leapUrl"
-                                    placeholder="https://www.example.com"
-                                    type="text" name="leapUrl" id="leapUrl"
-                                    class="shadow-sm focus:ring-blue focus:border-blue block w-full
-                                    placeholder-gray-500 placeholder-opacity-50
-                                    sm:text-sm text-gray-700 rounded-md border-gray-200"
-                                >
-                            </div>
-                        </div>
-
                         <div class="block h-1 border-b border-gray-200 mt-10"></div>
                         <div class="flex items-center justify-between mt-5">
                             <button
@@ -145,9 +119,11 @@
 
 <script>
 
+import LogoIcon from "../Icons/LogoIcon";
+import TimesIcon from "../Icons/TimesIcon";
 export default {
     name: "EditPorchModal",
-    components: {},
+    components: {TimesIcon, LogoIcon},
     props: {
         show: {
             type: Boolean,

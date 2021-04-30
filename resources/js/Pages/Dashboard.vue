@@ -41,7 +41,7 @@
                             </ul>
                         </div>
                     </div>
-                    <new-bio-modal
+                    <create-porch-modal
                         v-model:show-create-bio-modal="showCreateBioModal"
                         :errors="errors"
                     />
@@ -58,15 +58,15 @@ import AppLayout from '@/Layouts/AppLayout'
 import UserWelcomeBanner from "@/Components/UserWelcomeBanner";
 import DashboardStats from "@/Components/DashboardStats";
 import BioItem from "@/Components/BioItem";
-import NewBioModal from "../Components/NewBioModal";
+import CreatePorchModal from "@/Components/Modals/CreatePorchModal";
 
 export default {
     components: {
+        CreatePorchModal,
         AppLayout,
         UserWelcomeBanner,
         DashboardStats,
         BioItem,
-        NewBioModal,
     },
     props: {
         bios: Object,
