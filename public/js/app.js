@@ -17520,6 +17520,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Icons_CogIcon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Icons/CogIcon */ "./resources/js/Components/Icons/CogIcon.vue");
 /* harmony import */ var _Icons_RightArrowCircleIcon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Icons/RightArrowCircleIcon */ "./resources/js/Components/Icons/RightArrowCircleIcon.vue");
 /* harmony import */ var _Modals_EditPorchModal__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Modals/EditPorchModal */ "./resources/js/Components/Modals/EditPorchModal.vue");
+/* harmony import */ var _Jetstream_ConfirmationModal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Jetstream/ConfirmationModal */ "./resources/js/Jetstream/ConfirmationModal.vue");
+/* harmony import */ var _Jetstream_Button__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/Jetstream/Button */ "./resources/js/Jetstream/Button.vue");
+
+
 
 
 
@@ -17536,6 +17540,7 @@ __webpack_require__.r(__webpack_exports__);
     bio: Object
   },
   components: {
+    ConfirmationModal: _Jetstream_ConfirmationModal__WEBPACK_IMPORTED_MODULE_10__.default,
     EditPorchModal: _Modals_EditPorchModal__WEBPACK_IMPORTED_MODULE_9__.default,
     RightArrowCircleIcon: _Icons_RightArrowCircleIcon__WEBPACK_IMPORTED_MODULE_8__.default,
     CogIcon: _Icons_CogIcon__WEBPACK_IMPORTED_MODULE_7__.default,
@@ -17545,11 +17550,13 @@ __webpack_require__.r(__webpack_exports__);
     PowerIconUp: _Icons_PowerIconUp__WEBPACK_IMPORTED_MODULE_2__.default,
     PowerIconDown: _Icons_PowerIconDown__WEBPACK_IMPORTED_MODULE_3__.default,
     ForwardIcon: _Icons_ForwardIcon__WEBPACK_IMPORTED_MODULE_1__.default,
-    ToggleInput: _Input_ToggleInput__WEBPACK_IMPORTED_MODULE_0__.default
+    ToggleInput: _Input_ToggleInput__WEBPACK_IMPORTED_MODULE_0__.default,
+    JetButton: _Jetstream_Button__WEBPACK_IMPORTED_MODULE_11__.default
   },
   data: function data() {
     return {
       showEditForm: false,
+      deleteConfirmationModal: false,
       form: this.$inertia.form({
         is_active: this.bio.is_active
       })
@@ -17570,11 +17577,17 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    onClickDeletePorch: function onClickDeletePorch(bio) {
+    onClickDeletePorch: function onClickDeletePorch() {
+      this.deleteConfirmationModal = true;
+    },
+    onConfirmationCancelBtn: function onConfirmationCancelBtn() {
+      this.deleteConfirmationModal = false;
+    },
+    onConfirmationDeleteBtn: function onConfirmationDeleteBtn() {
       var _this2 = this;
 
       this.$inertia["delete"](route('bio.delete', {
-        bio: bio.slug
+        bio: this.bio.slug
       }), {
         onSuccess: function onSuccess() {
           _this2.$emitter.emit('notify', {
@@ -21510,7 +21523,7 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-67b02f80");
 
 var _hoisted_1 = {
-  "class": "relative border border-gray-200 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6"
+  "class": "relative rounded border border-gray-200 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6"
 };
 var _hoisted_2 = {
   "class": "flex items-center justify-between"
@@ -21567,6 +21580,14 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Delete Porch ");
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Are you sure you want to delete this porch ? ");
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Never mind");
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Delete");
+
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
@@ -21583,6 +21604,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   var _component_trash_solid_icon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("trash-solid-icon");
 
   var _component_edit_porch_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("edit-porch-modal");
+
+  var _component_jet_button = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-button");
+
+  var _component_confirmation_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirmation-modal");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("li", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Repo name and link "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Inertia_link, {
     href: "/dashboard/bios/".concat($props.bio.slug),
@@ -21626,8 +21651,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, null, 8
   /* PROPS */
   , ["status", "onUpdate:status"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-    onClick: _cache[2] || (_cache[2] = function ($event) {
-      return $options.onClickDeletePorch($props.bio);
+    onClick: _cache[2] || (_cache[2] = function () {
+      return $options.onClickDeletePorch && $options.onClickDeletePorch.apply($options, arguments);
     }),
     "class": "text-gray-300 hover:text-gray-400 cursor-pointer"
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_trash_solid_icon, {
@@ -21640,7 +21665,48 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     bio: $props.bio
   }, null, 8
   /* PROPS */
-  , ["show", "bio"])], 64
+  , ["show", "bio"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirmation_modal, {
+    show: $data.deleteConfirmationModal
+  }, {
+    title: _withId(function () {
+      return [_hoisted_14];
+    }),
+    content: _withId(function () {
+      return [_hoisted_15];
+    }),
+    footer: _withId(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        onClick: $options.onConfirmationCancelBtn,
+        "class": "bg-blue py-2.5 px-5 mr-5"
+      }, {
+        "default": _withId(function () {
+          return [_hoisted_16];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["onClick"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_button, {
+        onClick: $options.onConfirmationDeleteBtn,
+        "class": "bg-red-500 py-2.5 px-5"
+      }, {
+        "default": _withId(function () {
+          return [_hoisted_17];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["onClick"])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["show"])], 64
   /* STABLE_FRAGMENT */
   );
 });
@@ -27843,7 +27909,7 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_12 = {
-  "class": "relative z-0 bg-white mt-5 p-5 space-y-5"
+  "class": "relative z-0 bg-white mt-5 p-5 space-y-5 rounded"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_user_welcome_banner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("user-welcome-banner");

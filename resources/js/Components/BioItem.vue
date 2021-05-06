@@ -1,5 +1,5 @@
 <template>
-    <li class="relative border border-gray-200 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
+    <li class="relative rounded border border-gray-200 px-5 hover:bg-gray-50 sm:py-6 sm:pl-6 lg:pl-8 xl:pl-6">
         <div class="flex items-center justify-between">
             <!-- Repo name and link -->
             <div class="min-w-0">
@@ -52,7 +52,7 @@
                     </span>
                     <power-toggle :status="form.is_active" @update:status="handleToggle" />
                     <span
-                        @click="onClickDeletePorch(bio)"
+                        @click="onClickDeletePorch"
                         class="text-gray-300 hover:text-gray-400 cursor-pointer">
                         <trash-solid-icon class="w-6 h-6" />
                     </span>
@@ -62,6 +62,24 @@
         </div>
     </li>
     <edit-porch-modal v-model:show="showEditForm" :bio="bio"/>
+    <confirmation-modal :show="deleteConfirmationModal">
+        <template v-slot:title>
+            Delete Porch
+        </template>
+        <template v-slot:content>
+            Are you sure you want to delete this porch ?
+        </template>
+        <template v-slot:footer>
+            <jet-button
+                @click="onConfirmationCancelBtn"
+                class="bg-blue py-2.5 px-5 mr-5"
+            >Never mind</jet-button>
+            <jet-button
+                @click="onConfirmationDeleteBtn"
+                class="bg-red-500 py-2.5 px-5"
+            >Delete</jet-button>
+        </template>
+    </confirmation-modal>
 </template>
 
 <script>
@@ -75,6 +93,8 @@ import TrashSolidIcon from "./Icons/TrashSolidIcon";
 import CogIcon from "./Icons/CogIcon";
 import RightArrowCircleIcon from "./Icons/RightArrowCircleIcon";
 import EditPorchModal from "./Modals/EditPorchModal";
+import ConfirmationModal from "../Jetstream/ConfirmationModal";
+import JetButton from "@/Jetstream/Button";
 
 export default {
     name: "BioItem",
@@ -82,6 +102,7 @@ export default {
         bio: Object
     },
     components: {
+        ConfirmationModal,
         EditPorchModal,
         RightArrowCircleIcon,
         CogIcon,
@@ -91,11 +112,13 @@ export default {
         PowerIconUp,
         PowerIconDown,
         ForwardIcon,
-        ToggleInput
+        ToggleInput,
+        JetButton
     },
     data() {
         return {
             showEditForm: false,
+            deleteConfirmationModal: false,
             form: this.$inertia.form({
                 is_active: this.bio.is_active
             })
@@ -110,8 +133,14 @@ export default {
                 onSuccess: () => this.processing = false
             })
         },
-        onClickDeletePorch(bio){
-            this.$inertia.delete(route('bio.delete', { bio: bio.slug }),{
+        onClickDeletePorch(){
+            this.deleteConfirmationModal = true
+        },
+        onConfirmationCancelBtn(){
+            this.deleteConfirmationModal= false
+        },
+        onConfirmationDeleteBtn(){
+            this.$inertia.delete(route('bio.delete', { bio: this.bio.slug }),{
                 onSuccess: () => {
                     this.$emitter.emit('notify',{
                         type: 'success',
@@ -120,6 +149,7 @@ export default {
                 }
             })
         }
+
     }
 
 }

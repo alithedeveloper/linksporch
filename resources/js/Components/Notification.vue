@@ -77,14 +77,12 @@ export default {
         }
     },
     mounted() {
-
         this.$emitter.on('notify', (payload) => {
             this.showNotification = true
             if (payload.type) this.type = payload.type
             this.title = payload.title
             this.message=payload.message
         })
-
     }
 }
 </script>
